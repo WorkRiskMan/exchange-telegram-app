@@ -204,19 +204,32 @@
         <main class="main-content orders-page">
             <div class="page-header">
                 <h2>Актуальные заявки</h2>
-                <p class="page-subtitle">Выберите заявку для бронирования</p>
+                <p class="page-subtitle">Скопируйте ID заявки и отправьте в поддержку</p>
             </div>
 
-            <!-- Фильтры -->
+            <!-- Красивые фильтры сортировки -->
             <div class="filters">
-                <div class="filter-group">
-                    <label>Сортировка:</label>
-                    <select id="sortFilter">
-                        <option value="rate-asc">По курсу (низкий → высокий)</option>
-                        <option value="rate-desc">По курсу (высокий → низкий)</option>
-                        <option value="volume-asc">По объему (маленький → большой)</option>
-                        <option value="volume-desc">По объему (большой → маленький)</option>
-                    </select>
+                <div class="filter-header">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <h3>Сортировка заявок</h3>
+                </div>
+                <div class="sort-options" id="buySortOptions">
+                    <button class="sort-btn active" data-sort="rate-asc">
+                        <i class="fas fa-arrow-up"></i>
+                        Курс (низкий → высокий)
+                    </button>
+                    <button class="sort-btn" data-sort="rate-desc">
+                        <i class="fas fa-arrow-down"></i>
+                        Курс (высокий → низкий)
+                    </button>
+                    <button class="sort-btn" data-sort="volume-asc">
+                        <i class="fas fa-arrow-up"></i>
+                        Объем (маленький → большой)
+                    </button>
+                    <button class="sort-btn" data-sort="volume-desc">
+                        <i class="fas fa-arrow-down"></i>
+                        Объем (большой → маленький)
+                    </button>
                 </div>
             </div>
 
@@ -225,9 +238,9 @@
                 <!-- Заявки будут вставляться здесь через JavaScript -->
             </div>
 
-            <!-- Информация о бронировании -->
+            <!-- Информация -->
             <div class="booking-info">
-                <p><i class="fas fa-info-circle"></i> После бронирования свяжитесь с поддержкой и отправьте ID заявки</p>
+                <p><i class="fas fa-info-circle"></i> Скопируйте ID заявки и отправьте его в техническую поддержку для бронирования</p>
             </div>
         </main>
     </div>
@@ -250,19 +263,32 @@
         <main class="main-content orders-page">
             <div class="page-header">
                 <h2>Актуальные заявки</h2>
-                <p class="page-subtitle">Выберите заявку для бронирования</p>
+                <p class="page-subtitle">Скопируйте ID заявки и отправьте в поддержку</p>
             </div>
 
-            <!-- Фильтры -->
+            <!-- Красивые фильтры сортировки -->
             <div class="filters">
-                <div class="filter-group">
-                    <label>Сортировка:</label>
-                    <select id="sortFilterSell">
-                        <option value="rate-asc">По курсу (низкий → высокий)</option>
-                        <option value="rate-desc">По курсу (высокий → низкий)</option>
-                        <option value="volume-asc">По объему (маленький → большой)</option>
-                        <option value="volume-desc">По объему (большой → маленький)</option>
-                    </select>
+                <div class="filter-header">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <h3>Сортировка заявок</h3>
+                </div>
+                <div class="sort-options" id="sellSortOptions">
+                    <button class="sort-btn active" data-sort="rate-asc">
+                        <i class="fas fa-arrow-up"></i>
+                        Курс (низкий → высокий)
+                    </button>
+                    <button class="sort-btn" data-sort="rate-desc">
+                        <i class="fas fa-arrow-down"></i>
+                        Курс (высокий → низкий)
+                    </button>
+                    <button class="sort-btn" data-sort="volume-asc">
+                        <i class="fas fa-arrow-up"></i>
+                        Объем (маленький → большой)
+                    </button>
+                    <button class="sort-btn" data-sort="volume-desc">
+                        <i class="fas fa-arrow-down"></i>
+                        Объем (большой → маленький)
+                    </button>
                 </div>
             </div>
 
@@ -271,9 +297,9 @@
                 <!-- Заявки будут вставляться здесь через JavaScript -->
             </div>
 
-            <!-- Информация о бронировании -->
+            <!-- Информация -->
             <div class="booking-info">
-                <p><i class="fas fa-info-circle"></i> После бронирования свяжитесь с поддержкой и отправьте ID заявки</p>
+                <p><i class="fas fa-info-circle"></i> Скопируйте ID заявки и отправьте его в техническую поддержку для бронирования</p>
             </div>
         </main>
     </div>
@@ -289,4 +315,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
