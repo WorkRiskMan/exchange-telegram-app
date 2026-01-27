@@ -3,70 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обменник</title>
+    <title>Peer-to-peer | Обменник</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
-        <header class="app-header">
-            <h1>Обменник</h1>
+        <!-- Верхняя плашка с названием -->
+        <header class="main-header">
+            <div class="logo-container">
+                <i class="fab fa-telegram logo-icon"></i>
+                <h1 class="app-title">Peer-to-peer</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
         </header>
-        
-        <main class="app-main">
-            <div class="exchange-options">
-                <button class="exchange-btn buy-btn" id="buyBtn">
-                    <span class="btn-text">Купить</span>
-                    <span class="btn-icon">🛒</span>
-                </button>
-                
-                <button class="exchange-btn sell-btn" id="sellBtn">
-                    <span class="btn-text">Продать</span>
-                    <span class="btn-icon">💰</span>
-                </button>
-            </div>
-            
-            <div class="exchange-form" id="exchangeForm">
-                <div class="form-header">
-                    <h2 id="formTitle">Купить</h2>
-                    <button class="close-btn" id="closeFormBtn">✕</button>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Приветствие -->
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h2>Добро пожаловать!</h2>
+                    <p>Безопасный обмен валют между пользователями</p>
                 </div>
-                
-                <div class="form-content">
-                    <div class="input-group">
-                        <label for="amount">Сумма (USD)</label>
-                        <input type="number" id="amount" placeholder="Введите сумму" min="1" max="10000">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="currency">Валюта получения</label>
-                        <select id="currency">
-                            <option value="RUB">Рубли (RUB)</option>
-                            <option value="EUR">Евро (EUR)</option>
-                            <option value="KZT">Тенге (KZT)</option>
-                            <option value="BYN">Белорусские рубли (BYN)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="rate-info">
-                        <p>Курс: <span id="currentRate">1 USD = 90.5 RUB</span></p>
-                        <p>Вы получите: <span id="receiveAmount" class="result-amount">0</span></p>
-                    </div>
-                    
-                    <button class="submit-btn" id="submitBtn">Подтвердить</button>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
                 </div>
             </div>
-            
+
+            <!-- Кнопки навигации -->
+            <div class="nav-buttons">
+                <button class="nav-btn exchange-btn" id="exchangeBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="btn-content">
+                        <h3>Обменник</h3>
+                        <p>Мгновенный обмен валют</p>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+
+                <button class="nav-btn navigation-btn" id="navigationBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="btn-content">
+                        <h3>Навигация</h3>
+                        <p>Карта обменных пунктов</p>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+
+                <button class="nav-btn account-btn" id="accountBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="btn-content">
+                        <h3>Личный кабинет</h3>
+                        <p>Баланс и история операций</p>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+
+                <button class="nav-btn premium-btn" id="premiumBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="btn-content">
+                        <h3>Премиум</h3>
+                        <p>Особые условия и бонусы</p>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+
+                <button class="nav-btn support-btn" id="supportBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="btn-content">
+                        <h3>Поддержка</h3>
+                        <p>Помощь и обратная связь</p>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>10,500+</h4>
+                        <p>Пользователей</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>45,200+</h4>
+                        <p>Сделок</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>100%</h4>
+                        <p>Безопасность</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Уведомление (скрыто по умолчанию) -->
             <div class="notification" id="notification">
-                <p id="notificationText"></p>
+                <div class="notification-content">
+                    <i class="fas fa-info-circle"></i>
+                    <p id="notificationText"></p>
+                </div>
             </div>
         </main>
-        
-        <footer class="app-footer">
-            <p>Курсы обновляются ежедневно</p>
+
+        <!-- Нижний колонтитул -->
+        <footer class="main-footer">
+            <p>© 2024 Peer-to-peer Exchange. Все права защищены.</p>
+            <div class="footer-links">
+                <a href="#">Политика конфиденциальности</a>
+                <span>•</span>
+                <a href="#">Условия использования</a>
+            </div>
         </footer>
     </div>
-    
+
     <script src="app.js"></script>
 </body>
 </html>
