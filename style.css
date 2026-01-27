@@ -209,7 +209,7 @@ body {
 .exchange-page {
     flex: 1;
     padding: 0 25px;
-    display: none; /* Скрыта по умолчанию */
+    /* УДАЛИЛ display: none; - видимостью управляет JS */
     flex-direction: column;
     gap: 30px;
 }
