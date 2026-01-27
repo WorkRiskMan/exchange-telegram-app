@@ -1,88 +1,19 @@
 // Инициализация Telegram Web App
 const tg = window.Telegram.WebApp;
-tg.expand(); // Развернуть приложение на весь экран
-tg.setHeaderColor('#0088cc');
-tg.setBackgroundColor('#f5f5f5');
+tg.expand();
+tg.setHeaderColor('#8a2be2');
+tg.setBackgroundColor('#0a0a0a');
 
 // Элементы DOM
-const buyBtn = document.getElementById('buyBtn');
-const sellBtn = document.getElementById('sellBtn');
-const exchangeForm = document.getElementById('exchangeForm');
-const formTitle = document.getElementById('formTitle');
-const closeFormBtn = document.getElementById('closeFormBtn');
-const amountInput = document.getElementById('amount');
-const currencySelect = document.getElementById('currency');
-const currentRate = document.getElementById('currentRate');
-const receiveAmount = document.getElementById('receiveAmount');
-const submitBtn = document.getElementById('submitBtn');
+const exchangeBtn = document.getElementById('exchangeBtn');
+const navigationBtn = document.getElementById('navigationBtn');
+const accountBtn = document.getElementById('accountBtn');
+const premiumBtn = document.getElementById('premiumBtn');
+const supportBtn = document.getElementById('supportBtn');
 const notification = document.getElementById('notification');
 const notificationText = document.getElementById('notificationText');
 
-// Курсы обмена (можно заменить на реальные данные с API)
-const exchangeRates = {
-    'RUB': { buy: 90.5, sell: 89.2 },
-    'EUR': { buy: 0.92, sell: 0.90 },
-    'KZT': { buy: 450.3, sell: 445.1 },
-    'BYN': { buy: 3.2, sell: 3.15 }
-};
-
-let currentAction = 'buy'; // 'buy' или 'sell'
-
-// Обновление отображаемого курса
-function updateRateDisplay() {
-    const currency = currencySelect.value;
-    const rate = exchangeRates[currency][currentAction];
-    
-    if (currentAction === 'buy') {
-        currentRate.textContent = `1 USD = ${rate} ${currency}`;
-    } else {
-        currentRate.textContent = `1 ${currency} = ${(1/rate).toFixed(4)} USD`;
-    }
-    
-    calculateAmount();
-}
-
-// Расчет суммы для получения
-function calculateAmount() {
-    const amount = parseFloat(amountInput.value) || 0;
-    const currency = currencySelect.value;
-    const rate = exchangeRates[currency][currentAction];
-    
-    if (currentAction === 'buy') {
-        // При покупке: USD -> Валюта
-        const result = amount * rate;
-        receiveAmount.textContent = `${result.toFixed(2)} ${currency}`;
-    } else {
-        // При продаже: Валюта -> USD
-        const result = amount / rate;
-        receiveAmount.textContent = `${result.toFixed(2)} USD`;
-    }
-}
-
-// Показать форму обмена
-function showForm(action) {
-    currentAction = action;
-    formTitle.textContent = action === 'buy' ? 'Купить' : 'Продать';
-    
-    // Обновляем цвет кнопки подтверждения в зависимости от действия
-    if (action === 'buy') {
-        submitBtn.style.background = 'linear-gradient(135deg, #00c853 0%, #64dd17 100%)';
-    } else {
-        submitBtn.style.background = 'linear-gradient(135deg, #ff3d00 0%, #ff9100 100%)';
-    }
-    
-    updateRateDisplay();
-    exchangeForm.style.display = 'block';
-}
-
-// Скрыть форму обмена
-function hideForm() {
-    exchangeForm.style.display = 'none';
-    amountInput.value = '';
-    calculateAmount();
-}
-
-// Показать уведомление
+// Функция показа уведомления
 function showNotification(message, duration = 3000) {
     notificationText.textContent = message;
     notification.style.display = 'block';
@@ -92,59 +23,58 @@ function showNotification(message, duration = 3000) {
     }, duration);
 }
 
-// Обработчики событий
-buyBtn.addEventListener('click', () => showForm('buy'));
-sellBtn.addEventListener('click', () => showForm('sell'));
-closeFormBtn.addEventListener('click', hideForm);
+// Анимация при нажатии кнопок
+function animateButton(button) {
+    button.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        button.style.transform = '';
+    }, 150);
+}
 
-amountInput.addEventListener('input', calculateAmount);
-currencySelect.addEventListener('change', updateRateDisplay);
-
-submitBtn.addEventListener('click', () => {
-    const amount = parseFloat(amountInput.value);
-    
-    if (!amount || amount <= 0) {
-        showNotification('Пожалуйста, введите корректную сумму');
-        return;
-    }
-    
-    const currency = currencySelect.value;
-    const rate = exchangeRates[currency][currentAction];
-    let message;
-    
-    if (currentAction === 'buy') {
-        const result = amount * rate;
-        message = `Вы покупаете ${result.toFixed(2)} ${currency} за ${amount} USD`;
-    } else {
-        const result = amount / rate;
-        message = `Вы продаете ${amount} ${currency} за ${result.toFixed(2)} USD`;
-    }
-    
-    showNotification(message);
-    
-    // В реальном приложении здесь будет отправка данных на сервер
-    // tg.sendData(JSON.stringify({action: currentAction, amount, currency}));
-    
-    // Через 2 секунды закрываем форму
-    setTimeout(hideForm, 2000);
+// Обработчики событий для кнопок
+exchangeBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Переход в обменник... В разработке');
+    // Здесь будет переход на страницу обменника
 });
 
-// Инициализация при загрузке
-updateRateDisplay();
+navigationBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Навигация по обменным пунктам... В разработке');
+});
 
-// Обработка нажатия кнопки "Назад" в Telegram
-tg.BackButton.onClick(hideForm);
-tg.BackButton.hide();
+accountBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Личный кабинет... В разработке');
+});
 
-// Показываем кнопку "Назад" когда форма открыта
-const originalShowForm = showForm;
-showForm = function(action) {
-    originalShowForm(action);
-    tg.BackButton.show();
-};
+premiumBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Премиум подписка... В разработке');
+});
 
-const originalHideForm = hideForm;
-hideForm = function() {
-    originalHideForm();
-    tg.BackButton.hide();
-};
+supportBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Связь с поддержкой... В разработке');
+});
+
+// Плавное появление элементов при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    const elements = document.querySelectorAll('.nav-btn, .welcome-section, .stat-card');
+    
+    elements.forEach((element, index) => {
+        setTimeout(() => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, 10);
+        }, index * 100);
+    });
+});
+
+// Инициализация приложения
+tg.ready();
