@@ -106,9 +106,8 @@
         </main>
     </div>
 
-    <!-- Страница обменника (скрыта по умолчанию) -->
+    <!-- Страница обменника -->
     <div class="app-container" id="exchangePage" style="display: none;">
-        <!-- Верхняя плашка с названием -->
         <header class="main-header">
             <div class="logo-container">
                 <button class="back-btn" id="backBtn">
@@ -122,9 +121,7 @@
             </div>
         </header>
 
-        <!-- Основной контент -->
         <main class="main-content exchange-page">
-            <!-- Приветствие -->
             <div class="welcome-section">
                 <div class="welcome-text">
                     <h2>Выберите тип обмена</h2>
@@ -135,7 +132,6 @@
                 </div>
             </div>
 
-            <!-- Кнопки выбора типа обмена -->
             <div class="exchange-options">
                 <div class="exchange-option" id="usdtRubOption">
                     <div class="option-content">
@@ -152,7 +148,6 @@
                     </div>
                 </div>
 
-                <!-- Подкнопки для USDT/RUB -->
                 <div class="sub-buttons" id="usdtRubSubButtons">
                     <button class="sub-btn buy-sub-btn" id="buyUsdtBtn">
                         <i class="fas fa-shopping-cart"></i>
@@ -179,10 +174,9 @@
                     </div>
                 </div>
 
-                <!-- Плашка для других активов -->
                 <div class="other-assets-panel" id="otherAssetsPanel">
                     <p>Для обмена другими активами напишите в техническую поддержку — 
-                        <a href="https://t.me/peertopeer_support" class="support-link" target="_blank">@peertopeer_support</a>
+                        <a href="https://t.me/support_p2p_exchange" class="support-link" target="_blank">@support_p2p_exchange</a>
                     </p>
                     <p style="margin-top: 10px; font-size: 14px; color: #aaa;">
                         Доступны: BTC, ETH, BNB, SOL, TON и другие популярные криптовалюты
@@ -192,7 +186,99 @@
         </main>
     </div>
 
-    <!-- Общее уведомление (для всех страниц) -->
+    <!-- Страница покупки USDT -->
+    <div class="app-container" id="buyUsdtPage" style="display: none;">
+        <header class="main-header">
+            <div class="logo-container">
+                <button class="back-btn" id="backFromBuyBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="app-title">Купить USDT</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content orders-page">
+            <div class="page-header">
+                <h2>Актуальные заявки</h2>
+                <p class="page-subtitle">Выберите заявку для бронирования</p>
+            </div>
+
+            <!-- Фильтры -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Сортировка:</label>
+                    <select id="sortFilter">
+                        <option value="rate-asc">По курсу (низкий → высокий)</option>
+                        <option value="rate-desc">По курсу (высокий → низкий)</option>
+                        <option value="volume-asc">По объему (маленький → большой)</option>
+                        <option value="volume-desc">По объему (большой → маленький)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Контейнер для заявок -->
+            <div class="orders-container" id="buyOrdersContainer">
+                <!-- Заявки будут вставляться здесь через JavaScript -->
+            </div>
+
+            <!-- Информация о бронировании -->
+            <div class="booking-info">
+                <p><i class="fas fa-info-circle"></i> После бронирования свяжитесь с поддержкой и отправьте ID заявки</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Страница продажи USDT -->
+    <div class="app-container" id="sellUsdtPage" style="display: none;">
+        <header class="main-header">
+            <div class="logo-container">
+                <button class="back-btn" id="backFromSellBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="app-title">Продать USDT</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content orders-page">
+            <div class="page-header">
+                <h2>Актуальные заявки</h2>
+                <p class="page-subtitle">Выберите заявку для бронирования</p>
+            </div>
+
+            <!-- Фильтры -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Сортировка:</label>
+                    <select id="sortFilterSell">
+                        <option value="rate-asc">По курсу (низкий → высокий)</option>
+                        <option value="rate-desc">По курсу (высокий → низкий)</option>
+                        <option value="volume-asc">По объему (маленький → большой)</option>
+                        <option value="volume-desc">По объему (большой → маленький)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Контейнер для заявок -->
+            <div class="orders-container" id="sellOrdersContainer">
+                <!-- Заявки будут вставляться здесь через JavaScript -->
+            </div>
+
+            <!-- Информация о бронировании -->
+            <div class="booking-info">
+                <p><i class="fas fa-info-circle"></i> После бронирования свяжитесь с поддержкой и отправьте ID заявки</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Общее уведомление -->
     <div class="notification" id="notification">
         <div class="notification-content">
             <i class="fas fa-info-circle"></i>
