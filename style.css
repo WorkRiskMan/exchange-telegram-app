@@ -6,9 +6,10 @@
 }
 
 body {
-    background-color: #f5f5f5;
-    color: #333;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 100%);
+    color: #fff;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 .app-container {
@@ -16,248 +17,366 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background: linear-gradient(135deg, #f9f9f9 0%, #e8f4ff 100%);
+    padding: 0;
 }
 
-.app-header {
-    text-align: center;
-    margin-bottom: 40px;
-    padding-top: 20px;
-}
-
-.app-header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #0088cc;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.app-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.exchange-options {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    width: 100%;
-    max-width: 350px;
+/* Верхняя плашка */
+.main-header {
+    background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%);
+    padding: 20px 25px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
     margin-bottom: 30px;
 }
 
-.exchange-btn {
+.logo-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 25px 30px;
-    border: none;
-    border-radius: 20px;
-    font-size: 24px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
 }
 
-.buy-btn {
-    background: linear-gradient(135deg, #00c853 0%, #64dd17 100%);
-    color: white;
-}
-
-.sell-btn {
-    background: linear-gradient(135deg, #ff3d00 0%, #ff9100 100%);
-    color: white;
-}
-
-.exchange-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-}
-
-.exchange-btn:active {
-    transform: translateY(-2px);
-}
-
-.btn-text {
-    font-size: 28px;
-}
-
-.btn-icon {
+.logo-icon {
     font-size: 32px;
-}
-
-.exchange-form {
-    background-color: white;
-    border-radius: 20px;
-    padding: 25px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    display: none;
-    margin-top: 20px;
-}
-
-.form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f0f0f0;
-}
-
-.form-header h2 {
-    font-size: 26px;
-    color: #0088cc;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: #888;
-    cursor: pointer;
-    padding: 5px;
-    width: 40px;
-    height: 40px;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px;
     border-radius: 50%;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.close-btn:hover {
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-.input-group {
-    margin-bottom: 25px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #555;
-    font-size: 18px;
-}
-
-.input-group input, .input-group select {
-    width: 100%;
-    padding: 18px;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-size: 18px;
-    transition: border-color 0.3s;
-}
-
-.input-group input:focus, .input-group select:focus {
-    outline: none;
-    border-color: #0088cc;
-}
-
-.rate-info {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
-
-.rate-info p {
-    margin-bottom: 12px;
-    font-size: 18px;
-}
-
-.rate-info p:last-child {
-    margin-bottom: 0;
-}
-
-.result-amount {
-    font-weight: 700;
-    color: #0088cc;
-    font-size: 22px;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 20px;
-    background: linear-gradient(135deg, #0088cc 0%, #00bcd4 100%);
+.app-title {
+    font-size: 28px;
+    font-weight: 800;
     color: white;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    flex-grow: 1;
+    text-align: center;
+}
+
+.premium-badge {
+    background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #000;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.premium-badge i {
+    font-size: 18px;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Приветствие */
+.welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.welcome-text h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff69b4 0%, #da70d6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-text p {
+    color: #aaa;
+    font-size: 16px;
+}
+
+.user-avatar i {
+    font-size: 70px;
+    color: #8a2be2;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 50%;
+    border: 3px solid #ff69b4;
+}
+
+/* Кнопки навигации */
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 12px;
-    font-size: 22px;
-    font-weight: 600;
+    border-radius: 20px;
+    padding: 22px 25px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 136, 204, 0.3);
+.nav-btn:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 105, 180, 0.3);
+    box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
 }
 
+.btn-icon {
+    font-size: 28px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.btn-content {
+    flex-grow: 1;
+}
+
+.btn-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.btn-content p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.btn-arrow {
+    font-size: 20px;
+    color: #8a2be2;
+}
+
+/* Цвета для кнопок */
+.exchange-btn .btn-icon {
+    background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+    color: white;
+}
+
+.navigation-btn .btn-icon {
+    background: linear-gradient(135deg, #ff69b4 0%, #c71585 100%);
+    color: white;
+}
+
+.account-btn .btn-icon {
+    background: linear-gradient(135deg, #9370db 0%, #8a2be2 100%);
+    color: white;
+}
+
+.premium-btn .btn-icon {
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    color: #000;
+}
+
+.support-btn .btn-icon {
+    background: linear-gradient(135deg, #00ffff 0%, #008b8b 100%);
+    color: white;
+}
+
+/* Статистика */
+.stats-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.stat-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(255, 105, 180, 0.2) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #ff69b4;
+}
+
+.stat-info h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #8a2be2 0%, #ff69b4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-info p {
+    color: #aaa;
+    font-size: 12px;
+}
+
+/* Уведомление */
 .notification {
     position: fixed;
     bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #8a2be2 0%, #ff69b4 100%);
     color: white;
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(138, 43, 226, 0.5);
     display: none;
     z-index: 1000;
     max-width: 90%;
-    text-align: center;
-    font-size: 18px;
+    animation: slideUp 0.3s ease forwards;
 }
 
-.app-footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    color: #777;
+@keyframes slideUp {
+    to {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     font-size: 16px;
+    font-weight: 500;
 }
 
-/* Адаптивность для мобильных устройств */
+.notification-content i {
+    font-size: 24px;
+}
+
+/* Нижний колонтитул */
+.main-footer {
+    text-align: center;
+    padding: 30px 25px 40px;
+    color: #777;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 30px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.footer-links a {
+    color: #8a2be2;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ff69b4;
+}
+
+.footer-links span {
+    color: #555;
+}
+
+/* Адаптивность */
 @media (max-width: 600px) {
-    .app-container {
-        padding: 15px;
+    .main-header {
+        padding: 18px 20px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
     }
     
-    .app-header h1 {
+    .logo-icon {
         font-size: 28px;
+        width: 50px;
+        height: 50px;
     }
     
-    .exchange-btn {
-        padding: 22px 25px;
-        font-size: 22px;
-    }
-    
-    .btn-text {
+    .app-title {
         font-size: 24px;
     }
     
-    .btn-icon {
-        font-size: 28px;
+    .premium-badge {
+        padding: 6px 12px;
+        font-size: 14px;
     }
     
-    .exchange-form {
+    .main-content {
+        padding: 0 20px;
+        gap: 25px;
+    }
+    
+    .welcome-section {
         padding: 20px;
     }
     
-    .form-header h2 {
+    .welcome-text h2 {
+        font-size: 22px;
+    }
+    
+    .user-avatar i {
+        font-size: 60px;
+    }
+    
+    .nav-btn {
+        padding: 18px 20px;
+    }
+    
+    .btn-icon {
+        width: 50px;
+        height: 50px;
         font-size: 24px;
+        margin-right: 15px;
+    }
+    
+    .btn-content h3 {
+        font-size: 18px;
+    }
+    
+    .stats-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 18px;
     }
 }
