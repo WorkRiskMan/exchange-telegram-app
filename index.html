@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
+    <!-- Главная страница -->
+    <div class="app-container" id="mainPage">
         <!-- Верхняя плашка с названием -->
         <header class="main-header">
             <div class="logo-container">
@@ -102,10 +103,103 @@
                     </div>
                 </button>
             </div>
+        </main>
+    </div>
+
+    <!-- Страница обменника (скрыта по умолчанию) -->
+    <div class="app-container" id="exchangePage" style="display: none;">
+        <!-- Верхняя плашка с названием -->
+        <header class="main-header">
+            <div class="logo-container">
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="app-title">Обменник</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content exchange-page">
+            <!-- Приветствие -->
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h2>Выберите тип обмена</h2>
+                    <p>Быстрый и безопасный обмен активов</p>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-coins"></i>
+                </div>
+            </div>
+
+            <!-- Кнопки выбора типа обмена -->
+            <div class="exchange-options">
+                <div class="exchange-option" id="usdtRubOption">
+                    <div class="option-content">
+                        <div class="option-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="option-text">
+                            <h3>Обмен USDT & RUB</h3>
+                            <p>Мгновенный обмен Tether и российских рублей</p>
+                        </div>
+                    </div>
+                    <div class="option-arrow">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <!-- Подкнопки для USDT/RUB -->
+                <div class="sub-buttons" id="usdtRubSubButtons">
+                    <button class="sub-btn buy-sub-btn" id="buyUsdtBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        Купить USDT
+                    </button>
+                    <button class="sub-btn sell-sub-btn" id="sellUsdtBtn">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Продать USDT
+                    </button>
+                </div>
+
+                <div class="exchange-option" id="otherAssetsOption">
+                    <div class="option-content">
+                        <div class="option-icon other">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <div class="option-text">
+                            <h3>Обмен других активов</h3>
+                            <p>Криптовалюты, токены и другие активы</p>
+                        </div>
+                    </div>
+                    <div class="option-arrow">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <!-- Плашка для других активов -->
+                <div class="other-assets-panel" id="otherAssetsPanel">
+                    <p>Для обмена другими активами напишите в техническую поддержку — 
+                        <a href="https://t.me/support_p2p_exchange" class="support-link" target="_blank">@support_p2p_exchange</a>
+                    </p>
+                    <p style="margin-top: 10px; font-size: 14px; color: #aaa;">
+                        Доступны: BTC, ETH, BNB, SOL, TON и другие популярные криптовалюты
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Общее уведомление (для всех страниц) -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <p id="notificationText"></p>
+        </div>
     </div>
 
     <script src="app.js"></script>
 </body>
 </html>
-
-
