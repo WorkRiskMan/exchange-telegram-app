@@ -13,16 +13,144 @@ const supportBtn = document.getElementById('supportBtn');
 const notification = document.getElementById('notification');
 const notificationText = document.getElementById('notificationText');
 
-// Элементы DOM - Страница обменника
+// Элементы DOM - Страницы
 const mainPage = document.getElementById('mainPage');
 const exchangePage = document.getElementById('exchangePage');
+const buyUsdtPage = document.getElementById('buyUsdtPage');
+const sellUsdtPage = document.getElementById('sellUsdtPage');
+
+// Элементы DOM - Кнопки навигации
 const backBtn = document.getElementById('backBtn');
+const backFromBuyBtn = document.getElementById('backFromBuyBtn');
+const backFromSellBtn = document.getElementById('backFromSellBtn');
 const usdtRubOption = document.getElementById('usdtRubOption');
 const otherAssetsOption = document.getElementById('otherAssetsOption');
 const usdtRubSubButtons = document.getElementById('usdtRubSubButtons');
 const otherAssetsPanel = document.getElementById('otherAssetsPanel');
 const buyUsdtBtn = document.getElementById('buyUsdtBtn');
 const sellUsdtBtn = document.getElementById('sellUsdtBtn');
+
+// Элементы DOM - Контейнеры заявок
+const buyOrdersContainer = document.getElementById('buyOrdersContainer');
+const sellOrdersContainer = document.getElementById('sellOrdersContainer');
+const sortFilter = document.getElementById('sortFilter');
+const sortFilterSell = document.getElementById('sortFilterSell');
+
+// ============================================
+// МАССИВ ЗАЯВОК - ВОТ ЭТО МЕСТО МОЖНО РЕДАКТИРОВАТЬ!
+// ============================================
+
+// Массив заявок на ПОКУПКУ USDT (пользователь покупает USDT за RUB)
+const buyOrders = [
+    {
+        id: "BUY-001",
+        type: "buy",
+        volume: 500,
+        rate: 92.5,
+        rubAmount: 46250,
+        counterparty: "Иван Петров",
+        exchange: "Binance",
+        status: "active"
+    },
+    {
+        id: "BUY-002",
+        type: "buy",
+        volume: 1000,
+        rate: 91.8,
+        rubAmount: 91800,
+        counterparty: "Анна Сидорова",
+        exchange: "Bybit",
+        status: "active"
+    },
+    {
+        id: "BUY-003",
+        type: "buy",
+        volume: 250,
+        rate: 93.2,
+        rubAmount: 23300,
+        counterparty: "Петр Иванов",
+        exchange: "Huobi",
+        status: "active"
+    },
+    {
+        id: "BUY-004",
+        type: "buy",
+        volume: 750,
+        rate: 90.5,
+        rubAmount: 67875,
+        counterparty: "Мария Козлова",
+        exchange: "OKX",
+        status: "active"
+    },
+    {
+        id: "BUY-005",
+        type: "buy",
+        volume: 1200,
+        rate: 92.0,
+        rubAmount: 110400,
+        counterparty: "Сергей Смирнов",
+        exchange: "Binance",
+        status: "active"
+    }
+];
+
+// Массив заявок на ПРОДАЖУ USDT (пользователь продает USDT за RUB)
+const sellOrders = [
+    {
+        id: "SELL-001",
+        type: "sell",
+        volume: 300,
+        rate: 89.5,
+        rubAmount: 26850,
+        counterparty: "Алексей Волков",
+        exchange: "Bybit",
+        status: "active"
+    },
+    {
+        id: "SELL-002",
+        type: "sell",
+        volume: 800,
+        rate: 88.7,
+        rubAmount: 70960,
+        counterparty: "Елена Новикова",
+        exchange: "Binance",
+        status: "active"
+    },
+    {
+        id: "SELL-003",
+        type: "sell",
+        volume: 450,
+        rate: 90.1,
+        rubAmount: 40545,
+        counterparty: "Дмитрий Федоров",
+        exchange: "Huobi",
+        status: "active"
+    },
+    {
+        id: "SELL-004",
+        type: "sell",
+        volume: 600,
+        rate: 89.0,
+        rubAmount: 53400,
+        counterparty: "Ольга Морозова",
+        exchange: "OKX",
+        status: "active"
+    },
+    {
+        id: "SELL-005",
+        type: "sell",
+        volume: 950,
+        rate: 88.2,
+        rubAmount: 83790,
+        counterparty: "Николай Павлов",
+        exchange: "Bybit",
+        status: "active"
+    }
+];
+
+// ============================================
+// КОНЕЦ РЕДАКТИРУЕМОЙ ЧАСТИ
+// ============================================
 
 // Состояния
 let usdtRubOpen = false;
@@ -46,26 +174,45 @@ function animateButton(button) {
     }, 150);
 }
 
-// Переход на страницу обменника
+// Навигация между страницами
+function goToMainPage() {
+    hideAllPages();
+    mainPage.style.display = 'flex';
+    tg.BackButton.hide();
+}
+
 function goToExchangePage() {
-    mainPage.style.display = 'none';
+    hideAllPages();
     exchangePage.style.display = 'flex';
     tg.BackButton.show();
 }
 
-// Возврат на главную страницу
-function goToMainPage() {
+function goToBuyUsdtPage() {
+    hideAllPages();
+    buyUsdtPage.style.display = 'flex';
+    tg.BackButton.show();
+    renderBuyOrders();
+}
+
+function goToSellUsdtPage() {
+    hideAllPages();
+    sellUsdtPage.style.display = 'flex';
+    tg.BackButton.show();
+    renderSellOrders();
+}
+
+function hideAllPages() {
+    mainPage.style.display = 'none';
     exchangePage.style.display = 'none';
-    mainPage.style.display = 'flex';
-    tg.BackButton.hide();
-    // Скрываем все открытые панели
+    buyUsdtPage.style.display = 'none';
+    sellUsdtPage.style.display = 'none';
     usdtRubSubButtons.style.display = 'none';
     otherAssetsPanel.style.display = 'none';
     usdtRubOpen = false;
     otherAssetsOpen = false;
 }
 
-// Переключение панели USDT/RUB
+// Переключение панелей на странице обменника
 function toggleUsdtRubPanel() {
     if (usdtRubOpen) {
         usdtRubSubButtons.style.display = 'none';
@@ -76,12 +223,9 @@ function toggleUsdtRubPanel() {
         usdtRubOpen = true;
         otherAssetsOpen = false;
     }
-    
-    // Обновляем стрелочки
     updateArrows();
 }
 
-// Переключение панели других активов
 function toggleOtherAssetsPanel() {
     if (otherAssetsOpen) {
         otherAssetsPanel.style.display = 'none';
@@ -92,18 +236,160 @@ function toggleOtherAssetsPanel() {
         otherAssetsOpen = true;
         usdtRubOpen = false;
     }
-    
-    // Обновляем стрелочки
     updateArrows();
 }
 
-// Обновление стрелочек на кнопках
 function updateArrows() {
     const usdtArrow = usdtRubOption.querySelector('.option-arrow i');
     const otherArrow = otherAssetsOption.querySelector('.option-arrow i');
     
     usdtArrow.className = usdtRubOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
     otherArrow.className = otherAssetsOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+}
+
+// Функция для создания HTML заявки
+function createOrderCard(order, isBuyPage) {
+    const card = document.createElement('div');
+    card.className = `order-card ${isBuyPage ? 'buy-card' : 'sell-card'}`;
+    
+    const typeText = isBuyPage ? 'ПОКУПКА' : 'ПРОДАЖА';
+    const typeClass = isBuyPage ? 'buy' : 'sell';
+    
+    card.innerHTML = `
+        <div class="order-header">
+            <div class="order-id">ID: ${order.id}</div>
+            <div class="order-type ${typeClass}">${typeText}</div>
+        </div>
+        
+        <div class="order-details">
+            <div class="order-detail">
+                <div class="detail-label">Объем USDT</div>
+                <div class="detail-value">${order.volume.toLocaleString('ru-RU')} USDT</div>
+            </div>
+            <div class="order-detail">
+                <div class="detail-label">Курс</div>
+                <div class="detail-value highlight">${order.rate} RUB/USDT</div>
+            </div>
+            <div class="order-detail">
+                <div class="detail-label">Сумма в рублях</div>
+                <div class="detail-value">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
+            </div>
+            <div class="order-detail">
+                <div class="detail-label">Биржа</div>
+                <div class="detail-value">${order.exchange}</div>
+            </div>
+        </div>
+        
+        <div class="order-parties">
+            <div class="party-info">
+                <div class="party-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="party-text">
+                    <h4>Контрагент</h4>
+                    <p>${order.counterparty}</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="book-btn" data-order-id="${order.id}">
+            <i class="fas fa-lock"></i>
+            Забронировать заявку
+        </button>
+    `;
+    
+    return card;
+}
+
+// Рендеринг заявок на покупку
+function renderBuyOrders() {
+    buyOrdersContainer.innerHTML = '';
+    
+    // Сортировка заявок
+    const sortedOrders = [...buyOrders].sort((a, b) => {
+        switch(sortFilter.value) {
+            case 'rate-asc': return a.rate - b.rate;
+            case 'rate-desc': return b.rate - a.rate;
+            case 'volume-asc': return a.volume - b.volume;
+            case 'volume-desc': return b.volume - a.volume;
+            default: return 0;
+        }
+    });
+    
+    sortedOrders.forEach(order => {
+        if (order.status === 'active') {
+            const card = createOrderCard(order, true);
+            buyOrdersContainer.appendChild(card);
+        }
+    });
+    
+    // Добавляем обработчики для кнопок бронирования
+    document.querySelectorAll('#buyOrdersContainer .book-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const orderId = this.getAttribute('data-order-id');
+            bookOrder(orderId, 'buy');
+        });
+    });
+}
+
+// Рендеринг заявок на продажу
+function renderSellOrders() {
+    sellOrdersContainer.innerHTML = '';
+    
+    // Сортировка заявок
+    const sortedOrders = [...sellOrders].sort((a, b) => {
+        switch(sortFilterSell.value) {
+            case 'rate-asc': return a.rate - b.rate;
+            case 'rate-desc': return b.rate - a.rate;
+            case 'volume-asc': return a.volume - b.volume;
+            case 'volume-desc': return b.volume - a.volume;
+            default: return 0;
+        }
+    });
+    
+    sortedOrders.forEach(order => {
+        if (order.status === 'active') {
+            const card = createOrderCard(order, false);
+            sellOrdersContainer.appendChild(card);
+        }
+    });
+    
+    // Добавляем обработчики для кнопок бронирования
+    document.querySelectorAll('#sellOrdersContainer .book-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const orderId = this.getAttribute('data-order-id');
+            bookOrder(orderId, 'sell');
+        });
+    });
+}
+
+// Бронирование заявки
+function bookOrder(orderId, orderType) {
+    const ordersArray = orderType === 'buy' ? buyOrders : sellOrders;
+    const order = ordersArray.find(o => o.id === orderId);
+    
+    if (order && order.status === 'active') {
+        order.status = 'booked';
+        
+        // Обновляем кнопку
+        const button = document.querySelector(`[data-order-id="${orderId}"]`);
+        if (button) {
+            button.innerHTML = '<i class="fas fa-check"></i> Забронировано';
+            button.classList.add('booked');
+            button.disabled = true;
+        }
+        
+        showNotification(`✅ Вы забронировали заявку ${orderId}! Отправьте этот ID в техническую поддержку для завершения сделки.`);
+        
+        // Обновляем списки через 2 секунды
+        setTimeout(() => {
+            if (orderType === 'buy') {
+                renderBuyOrders();
+            } else {
+                renderSellOrders();
+            }
+        }, 2000);
+    }
 }
 
 // Обработчики событий для главной страницы
@@ -134,22 +420,38 @@ supportBtn.addEventListener('click', function() {
 
 // Обработчики событий для страницы обменника
 backBtn.addEventListener('click', goToMainPage);
+backFromBuyBtn.addEventListener('click', goToExchangePage);
+backFromSellBtn.addEventListener('click', goToExchangePage);
+
 usdtRubOption.addEventListener('click', toggleUsdtRubPanel);
 otherAssetsOption.addEventListener('click', toggleOtherAssetsPanel);
 
-// Обработчики для подкнопок (заглушки)
+// Обработчики для перехода на страницы заявок
 buyUsdtBtn.addEventListener('click', function() {
     animateButton(this);
-    showNotification('Функция "Купить USDT" в разработке. Скоро!');
+    goToBuyUsdtPage();
 });
 
 sellUsdtBtn.addEventListener('click', function() {
     animateButton(this);
-    showNotification('Функция "Продать USDT" в разработке. Скоро!');
+    goToSellUsdtPage();
 });
 
+// Обработчики для фильтров
+sortFilter.addEventListener('change', renderBuyOrders);
+sortFilterSell.addEventListener('change', renderSellOrders);
+
 // Обработка кнопки "Назад" в Telegram
-tg.BackButton.onClick(goToMainPage);
+tg.BackButton.onClick(() => {
+    if (buyUsdtPage.style.display === 'flex') {
+        goToExchangePage();
+    } else if (sellUsdtPage.style.display === 'flex') {
+        goToExchangePage();
+    } else if (exchangePage.style.display === 'flex') {
+        goToMainPage();
+    }
+});
+
 tg.BackButton.hide();
 
 // Плавное появление элементов при загрузке
