@@ -30,11 +30,13 @@ const otherAssetsPanel = document.getElementById('otherAssetsPanel');
 const buyUsdtBtn = document.getElementById('buyUsdtBtn');
 const sellUsdtBtn = document.getElementById('sellUsdtBtn');
 
+// Элементы DOM - Сортировка
+const buySortOptions = document.getElementById('buySortOptions');
+const sellSortOptions = document.getElementById('sellSortOptions');
+
 // Элементы DOM - Контейнеры заявок
 const buyOrdersContainer = document.getElementById('buyOrdersContainer');
 const sellOrdersContainer = document.getElementById('sellOrdersContainer');
-const sortFilter = document.getElementById('sortFilter');
-const sortFilterSell = document.getElementById('sortFilterSell');
 
 // ============================================
 // МАССИВ ЗАЯВОК - ВОТ ЭТО МЕСТО МОЖНО РЕДАКТИРОВАТЬ!
@@ -50,8 +52,7 @@ const buyOrders = [
         rubAmount: 46250,
         counterparty: "Иван Петров",
         exchange: "Binance",
-        status: "active",
-        bookedUntil: null // Время окончания бронирования (если есть)
+        status: "active"
     },
     {
         id: "BUY-002",
@@ -61,8 +62,7 @@ const buyOrders = [
         rubAmount: 91800,
         counterparty: "Анна Сидорова",
         exchange: "Bybit",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "BUY-003",
@@ -72,8 +72,7 @@ const buyOrders = [
         rubAmount: 23300,
         counterparty: "Петр Иванов",
         exchange: "Huobi",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "BUY-004",
@@ -83,8 +82,7 @@ const buyOrders = [
         rubAmount: 67875,
         counterparty: "Мария Козлова",
         exchange: "OKX",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "BUY-005",
@@ -94,8 +92,7 @@ const buyOrders = [
         rubAmount: 110400,
         counterparty: "Сергей Смирнов",
         exchange: "Binance",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     }
 ];
 
@@ -109,8 +106,7 @@ const sellOrders = [
         rubAmount: 26850,
         counterparty: "Алексей Волков",
         exchange: "Bybit",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "SELL-002",
@@ -120,8 +116,7 @@ const sellOrders = [
         rubAmount: 70960,
         counterparty: "Елена Новикова",
         exchange: "Binance",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "SELL-003",
@@ -131,8 +126,7 @@ const sellOrders = [
         rubAmount: 40545,
         counterparty: "Дмитрий Федоров",
         exchange: "Huobi",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "SELL-004",
@@ -142,8 +136,7 @@ const sellOrders = [
         rubAmount: 53400,
         counterparty: "Ольга Морозова",
         exchange: "OKX",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     },
     {
         id: "SELL-005",
@@ -153,8 +146,7 @@ const sellOrders = [
         rubAmount: 83790,
         counterparty: "Николай Павлов",
         exchange: "Bybit",
-        status: "active",
-        bookedUntil: null
+        status: "active"
     }
 ];
 
@@ -162,8 +154,9 @@ const sellOrders = [
 // КОНЕЦ РЕДАКТИРУЕМОЙ ЧАСТИ
 // ============================================
 
-// Таймеры для активных бронирований
-const activeTimers = {};
+// Текущая сортировка
+let currentBuySort = 'rate-asc';
+let currentSellSort = 'rate-asc';
 
 // Состояния
 let usdtRubOpen = false;
@@ -260,24 +253,6 @@ function updateArrows() {
     otherArrow.className = otherAssetsOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
 }
 
-// Форматирование времени (минуты:секунды)
-function formatTime(minutes, seconds) {
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
-
-// Обновление таймера на карточке
-function updateTimer(orderId, timeLeft) {
-    const minutes = Math.floor(timeLeft / 60000);
-    const seconds = Math.floor((timeLeft % 60000) / 1000);
-    
-    const timerElement = document.querySelector(`[data-order-id="${orderId}"] .timer-display`);
-    if (timerElement) {
-        timerElement.textContent = formatTime(minutes, seconds);
-    }
-    
-    return timeLeft;
-}
-
 // Функция для создания HTML заявки
 function createOrderCard(order, isBuyPage) {
     const card = document.createElement('div');
@@ -285,40 +260,6 @@ function createOrderCard(order, isBuyPage) {
     
     const typeText = isBuyPage ? 'ПОКУПКА USDT' : 'ПРОДАЖА USDT';
     const typeClass = isBuyPage ? 'buy' : 'sell';
-    
-    let actionButton = '';
-    
-    // Проверяем, забронирована ли заявка
-    if (order.bookedUntil && order.bookedUntil > Date.now()) {
-        const timeLeft = order.bookedUntil - Date.now();
-        const minutes = Math.floor(timeLeft / 60000);
-        const seconds = Math.floor((timeLeft % 60000) / 1000);
-        
-        actionButton = `
-            <div class="booking-timer" data-order-id="${order.id}">
-                <div class="timer-display">${formatTime(minutes, seconds)}</div>
-                <div class="timer-label">
-                    <i class="fas fa-clock"></i>
-                    Забронировано на 10 минут
-                </div>
-            </div>
-        `;
-        
-        // Запускаем таймер для этой заявки
-        startTimer(order.id, timeLeft);
-    } else {
-        actionButton = `
-            <button class="book-btn" data-order-id="${order.id}">
-                <i class="fas fa-lock"></i>
-                Забронировать заявку
-            </button>
-        `;
-        
-        // Если время бронирования истекло, сбрасываем статус
-        if (order.bookedUntil) {
-            order.bookedUntil = null;
-        }
-    }
     
     card.innerHTML = `
         <div class="order-header">
@@ -341,7 +282,7 @@ function createOrderCard(order, isBuyPage) {
             </div>
             <div class="order-detail">
                 <div class="detail-label">Статус заявки</div>
-                <div class="detail-value">${order.bookedUntil && order.bookedUntil > Date.now() ? 'Забронирована' : 'Активна'}</div>
+                <div class="detail-value">${order.status === 'active' ? 'Активна' : 'Забронирована'}</div>
             </div>
         </div>
         
@@ -367,50 +308,66 @@ function createOrderCard(order, isBuyPage) {
             </div>
         </div>
         
-        ${actionButton}
+        <button class="copy-id-btn" data-order-id="${order.id}">
+            <i class="fas fa-copy"></i>
+            Скопировать ID
+        </button>
     `;
     
     return card;
 }
 
-// Запуск таймера для заявки
-function startTimer(orderId, duration) {
-    // Останавливаем предыдущий таймер, если есть
-    if (activeTimers[orderId]) {
-        clearInterval(activeTimers[orderId]);
+// Сортировка заявок
+function sortOrders(orders, sortType) {
+    const sortedOrders = [...orders];
+    
+    switch(sortType) {
+        case 'rate-asc':
+            return sortedOrders.sort((a, b) => a.rate - b.rate);
+        case 'rate-desc':
+            return sortedOrders.sort((a, b) => b.rate - a.rate);
+        case 'volume-asc':
+            return sortedOrders.sort((a, b) => a.volume - b.volume);
+        case 'volume-desc':
+            return sortedOrders.sort((a, b) => b.volume - a.volume);
+        default:
+            return sortedOrders;
     }
-    
-    const startTime = Date.now();
-    const endTime = startTime + duration;
-    
-    // Создаем интервал для обновления таймера
-    activeTimers[orderId] = setInterval(() => {
-        const timeLeft = endTime - Date.now();
-        
-        if (timeLeft <= 0) {
-            // Время вышло
-            clearInterval(activeTimers[orderId]);
-            delete activeTimers[orderId];
-            
-            // Находим заявку и обновляем ее статус
-            const order = [...buyOrders, ...sellOrders].find(o => o.id === orderId);
-            if (order) {
-                order.bookedUntil = null;
-                
-                // Перерисовываем заявки
-                if (buyOrders.some(o => o.id === orderId)) {
-                    renderBuyOrders();
-                } else {
-                    renderSellOrders();
-                }
-                
-                showNotification(`Время бронирования заявки ${orderId} истекло`);
-            }
+}
+
+// Обновление активных кнопок сортировки
+function updateSortButtons(container, activeSort) {
+    const buttons = container.querySelectorAll('.sort-btn');
+    buttons.forEach(btn => {
+        const sortType = btn.getAttribute('data-sort');
+        if (sortType === activeSort) {
+            btn.classList.add('active');
         } else {
-            // Обновляем отображение таймера
-            updateTimer(orderId, timeLeft);
+            btn.classList.remove('active');
         }
-    }, 1000);
+    });
+}
+
+// Копирование ID в буфер обмена
+function copyToClipboard(text) {
+    // Создаем временный элемент textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    
+    // Выделяем и копируем текст
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // Для мобильных устройств
+    
+    try {
+        document.execCommand('copy');
+        return true;
+    } catch (err) {
+        console.error('Ошибка копирования:', err);
+        return false;
+    } finally {
+        document.body.removeChild(textarea);
+    }
 }
 
 // Рендеринг заявок на покупку
@@ -418,26 +375,39 @@ function renderBuyOrders() {
     buyOrdersContainer.innerHTML = '';
     
     // Сортировка заявок
-    const sortedOrders = [...buyOrders].sort((a, b) => {
-        switch(sortFilter.value) {
-            case 'rate-asc': return a.rate - b.rate;
-            case 'rate-desc': return b.rate - a.rate;
-            case 'volume-asc': return a.volume - b.volume;
-            case 'volume-desc': return b.volume - a.volume;
-            default: return 0;
+    const sortedOrders = sortOrders(buyOrders, currentBuySort);
+    
+    sortedOrders.forEach(order => {
+        if (order.status === 'active') {
+            const card = createOrderCard(order, true);
+            buyOrdersContainer.appendChild(card);
         }
     });
     
-    sortedOrders.forEach(order => {
-        const card = createOrderCard(order, true);
-        buyOrdersContainer.appendChild(card);
-    });
+    // Обновляем активную кнопку сортировки
+    updateSortButtons(buySortOptions, currentBuySort);
     
-    // Добавляем обработчики для кнопок бронирования
-    document.querySelectorAll('#buyOrdersContainer .book-btn').forEach(btn => {
+    // Добавляем обработчики для кнопок копирования ID
+    document.querySelectorAll('#buyOrdersContainer .copy-id-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const orderId = this.getAttribute('data-order-id');
-            bookOrder(orderId, 'buy');
+            
+            // Копируем ID в буфер обмена
+            if (copyToClipboard(orderId)) {
+                // Меняем стиль кнопки на короткое время
+                this.innerHTML = '<i class="fas fa-check"></i> ID скопирован';
+                this.classList.add('copied');
+                
+                showNotification(`ID заявки "${orderId}" скопирован! Отправьте его в техническую поддержку.`);
+                
+                // Возвращаем исходный вид кнопки через 2 секунды
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-copy"></i> Скопировать ID';
+                    this.classList.remove('copied');
+                }, 2000);
+            } else {
+                showNotification('Не удалось скопировать ID. Попробуйте еще раз.');
+            }
         });
     });
 }
@@ -447,49 +417,41 @@ function renderSellOrders() {
     sellOrdersContainer.innerHTML = '';
     
     // Сортировка заявок
-    const sortedOrders = [...sellOrders].sort((a, b) => {
-        switch(sortFilterSell.value) {
-            case 'rate-asc': return a.rate - b.rate;
-            case 'rate-desc': return b.rate - a.rate;
-            case 'volume-asc': return a.volume - b.volume;
-            case 'volume-desc': return b.volume - a.volume;
-            default: return 0;
-        }
-    });
+    const sortedOrders = sortOrders(sellOrders, currentSellSort);
     
     sortedOrders.forEach(order => {
-        const card = createOrderCard(order, false);
-        sellOrdersContainer.appendChild(card);
+        if (order.status === 'active') {
+            const card = createOrderCard(order, false);
+            sellOrdersContainer.appendChild(card);
+        }
     });
     
-    // Добавляем обработчики для кнопок бронирования
-    document.querySelectorAll('#sellOrdersContainer .book-btn').forEach(btn => {
+    // Обновляем активную кнопку сортировки
+    updateSortButtons(sellSortOptions, currentSellSort);
+    
+    // Добавляем обработчики для кнопок копирования ID
+    document.querySelectorAll('#sellOrdersContainer .copy-id-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const orderId = this.getAttribute('data-order-id');
-            bookOrder(orderId, 'sell');
+            
+            // Копируем ID в буфер обмена
+            if (copyToClipboard(orderId)) {
+                // Меняем стиль кнопки на короткое время
+                this.innerHTML = '<i class="fas fa-check"></i> ID скопирован';
+                this.classList.add('copied');
+                
+                showNotification(`ID заявки "${orderId}" скопирован! Отправьте его в техническую поддержку.`);
+                
+                // Возвращаем исходный вид кнопки через 2 секунды
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-copy"></i> Скопировать ID';
+                    this.classList.remove('copied');
+                }, 2000);
+            } else {
+                showNotification('Не удалось скопировать ID. Попробуйте еще раз.');
+            }
         });
     });
-}
-
-// Бронирование заявки
-function bookOrder(orderId, orderType) {
-    const ordersArray = orderType === 'buy' ? buyOrders : sellOrders;
-    const order = ordersArray.find(o => o.id === orderId);
-    
-    if (order) {
-        // Устанавливаем время окончания бронирования (10 минут)
-        const bookingDuration = 10 * 60 * 1000; // 10 минут в миллисекундах
-        order.bookedUntil = Date.now() + bookingDuration;
-        
-        showNotification(`✅ Вы забронировали заявку ${orderId}! Время бронирования: 10 минут. Отправьте ID заявки в техническую поддержку.`);
-        
-        // Перерисовываем заявки
-        if (orderType === 'buy') {
-            renderBuyOrders();
-        } else {
-            renderSellOrders();
-        }
-    }
 }
 
 // Обработчики событий для главной страницы
@@ -537,9 +499,23 @@ sellUsdtBtn.addEventListener('click', function() {
     goToSellUsdtPage();
 });
 
-// Обработчики для фильтров
-sortFilter.addEventListener('change', renderBuyOrders);
-sortFilterSell.addEventListener('change', renderSellOrders);
+// Обработчики для сортировки на странице покупки
+buySortOptions.addEventListener('click', function(e) {
+    if (e.target.classList.contains('sort-btn')) {
+        const sortType = e.target.getAttribute('data-sort');
+        currentBuySort = sortType;
+        renderBuyOrders();
+    }
+});
+
+// Обработчики для сортировки на странице продажи
+sellSortOptions.addEventListener('click', function(e) {
+    if (e.target.classList.contains('sort-btn')) {
+        const sortType = e.target.getAttribute('data-sort');
+        currentSellSort = sortType;
+        renderSellOrders();
+    }
+});
 
 // Обработка кнопки "Назад" в Telegram
 tg.BackButton.onClick(() => {
