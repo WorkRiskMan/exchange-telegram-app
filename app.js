@@ -50,7 +50,8 @@ const buyOrders = [
         rubAmount: 46250,
         counterparty: "Иван Петров",
         exchange: "Binance",
-        status: "active"
+        status: "active",
+        bookedUntil: null // Время окончания бронирования (если есть)
     },
     {
         id: "BUY-002",
@@ -60,7 +61,8 @@ const buyOrders = [
         rubAmount: 91800,
         counterparty: "Анна Сидорова",
         exchange: "Bybit",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "BUY-003",
@@ -70,7 +72,8 @@ const buyOrders = [
         rubAmount: 23300,
         counterparty: "Петр Иванов",
         exchange: "Huobi",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "BUY-004",
@@ -80,7 +83,8 @@ const buyOrders = [
         rubAmount: 67875,
         counterparty: "Мария Козлова",
         exchange: "OKX",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "BUY-005",
@@ -90,7 +94,8 @@ const buyOrders = [
         rubAmount: 110400,
         counterparty: "Сергей Смирнов",
         exchange: "Binance",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     }
 ];
 
@@ -104,7 +109,8 @@ const sellOrders = [
         rubAmount: 26850,
         counterparty: "Алексей Волков",
         exchange: "Bybit",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "SELL-002",
@@ -114,7 +120,8 @@ const sellOrders = [
         rubAmount: 70960,
         counterparty: "Елена Новикова",
         exchange: "Binance",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "SELL-003",
@@ -124,7 +131,8 @@ const sellOrders = [
         rubAmount: 40545,
         counterparty: "Дмитрий Федоров",
         exchange: "Huobi",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "SELL-004",
@@ -134,7 +142,8 @@ const sellOrders = [
         rubAmount: 53400,
         counterparty: "Ольга Морозова",
         exchange: "OKX",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     },
     {
         id: "SELL-005",
@@ -144,13 +153,17 @@ const sellOrders = [
         rubAmount: 83790,
         counterparty: "Николай Павлов",
         exchange: "Bybit",
-        status: "active"
+        status: "active",
+        bookedUntil: null
     }
 ];
 
 // ============================================
 // КОНЕЦ РЕДАКТИРУЕМОЙ ЧАСТИ
 // ============================================
+
+// Таймеры для активных бронирований
+const activeTimers = {};
 
 // Состояния
 let usdtRubOpen = false;
@@ -247,13 +260,65 @@ function updateArrows() {
     otherArrow.className = otherAssetsOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
 }
 
+// Форматирование времени (минуты:секунды)
+function formatTime(minutes, seconds) {
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Обновление таймера на карточке
+function updateTimer(orderId, timeLeft) {
+    const minutes = Math.floor(timeLeft / 60000);
+    const seconds = Math.floor((timeLeft % 60000) / 1000);
+    
+    const timerElement = document.querySelector(`[data-order-id="${orderId}"] .timer-display`);
+    if (timerElement) {
+        timerElement.textContent = formatTime(minutes, seconds);
+    }
+    
+    return timeLeft;
+}
+
 // Функция для создания HTML заявки
 function createOrderCard(order, isBuyPage) {
     const card = document.createElement('div');
     card.className = `order-card ${isBuyPage ? 'buy-card' : 'sell-card'}`;
     
-    const typeText = isBuyPage ? 'ПОКУПКА' : 'ПРОДАЖА';
+    const typeText = isBuyPage ? 'ПОКУПКА USDT' : 'ПРОДАЖА USDT';
     const typeClass = isBuyPage ? 'buy' : 'sell';
+    
+    let actionButton = '';
+    
+    // Проверяем, забронирована ли заявка
+    if (order.bookedUntil && order.bookedUntil > Date.now()) {
+        const timeLeft = order.bookedUntil - Date.now();
+        const minutes = Math.floor(timeLeft / 60000);
+        const seconds = Math.floor((timeLeft % 60000) / 1000);
+        
+        actionButton = `
+            <div class="booking-timer" data-order-id="${order.id}">
+                <div class="timer-display">${formatTime(minutes, seconds)}</div>
+                <div class="timer-label">
+                    <i class="fas fa-clock"></i>
+                    Забронировано на 10 минут
+                </div>
+            </div>
+        `;
+        
+        // Запускаем таймер для этой заявки
+        startTimer(order.id, timeLeft);
+    } else {
+        actionButton = `
+            <button class="book-btn" data-order-id="${order.id}">
+                <i class="fas fa-lock"></i>
+                Забронировать заявку
+            </button>
+        `;
+        
+        // Если время бронирования истекло, сбрасываем статус
+        if (order.bookedUntil) {
+            order.bookedUntil = null;
+        }
+    }
     
     card.innerHTML = `
         <div class="order-header">
@@ -264,41 +329,88 @@ function createOrderCard(order, isBuyPage) {
         <div class="order-details">
             <div class="order-detail">
                 <div class="detail-label">Объем USDT</div>
-                <div class="detail-value">${order.volume.toLocaleString('ru-RU')} USDT</div>
+                <div class="detail-value volume">${order.volume.toLocaleString('ru-RU')} USDT</div>
             </div>
             <div class="order-detail">
-                <div class="detail-label">Курс</div>
+                <div class="detail-label">Курс обмена</div>
                 <div class="detail-value highlight">${order.rate} RUB/USDT</div>
             </div>
             <div class="order-detail">
                 <div class="detail-label">Сумма в рублях</div>
-                <div class="detail-value">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
+                <div class="detail-value amount">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
             </div>
             <div class="order-detail">
-                <div class="detail-label">Биржа</div>
-                <div class="detail-value">${order.exchange}</div>
+                <div class="detail-label">Статус заявки</div>
+                <div class="detail-value">${order.bookedUntil && order.bookedUntil > Date.now() ? 'Забронирована' : 'Активна'}</div>
             </div>
         </div>
         
-        <div class="order-parties">
-            <div class="party-info">
-                <div class="party-avatar">
+        <div class="order-info-row">
+            <div class="info-item">
+                <div class="info-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <div class="party-text">
+                <div class="info-text">
                     <h4>Контрагент</h4>
                     <p>${order.counterparty}</p>
                 </div>
             </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="info-text">
+                    <h4>Биржа</h4>
+                    <p>${order.exchange}</p>
+                </div>
+            </div>
         </div>
         
-        <button class="book-btn" data-order-id="${order.id}">
-            <i class="fas fa-lock"></i>
-            Забронировать заявку
-        </button>
+        ${actionButton}
     `;
     
     return card;
+}
+
+// Запуск таймера для заявки
+function startTimer(orderId, duration) {
+    // Останавливаем предыдущий таймер, если есть
+    if (activeTimers[orderId]) {
+        clearInterval(activeTimers[orderId]);
+    }
+    
+    const startTime = Date.now();
+    const endTime = startTime + duration;
+    
+    // Создаем интервал для обновления таймера
+    activeTimers[orderId] = setInterval(() => {
+        const timeLeft = endTime - Date.now();
+        
+        if (timeLeft <= 0) {
+            // Время вышло
+            clearInterval(activeTimers[orderId]);
+            delete activeTimers[orderId];
+            
+            // Находим заявку и обновляем ее статус
+            const order = [...buyOrders, ...sellOrders].find(o => o.id === orderId);
+            if (order) {
+                order.bookedUntil = null;
+                
+                // Перерисовываем заявки
+                if (buyOrders.some(o => o.id === orderId)) {
+                    renderBuyOrders();
+                } else {
+                    renderSellOrders();
+                }
+                
+                showNotification(`Время бронирования заявки ${orderId} истекло`);
+            }
+        } else {
+            // Обновляем отображение таймера
+            updateTimer(orderId, timeLeft);
+        }
+    }, 1000);
 }
 
 // Рендеринг заявок на покупку
@@ -317,10 +429,8 @@ function renderBuyOrders() {
     });
     
     sortedOrders.forEach(order => {
-        if (order.status === 'active') {
-            const card = createOrderCard(order, true);
-            buyOrdersContainer.appendChild(card);
-        }
+        const card = createOrderCard(order, true);
+        buyOrdersContainer.appendChild(card);
     });
     
     // Добавляем обработчики для кнопок бронирования
@@ -348,10 +458,8 @@ function renderSellOrders() {
     });
     
     sortedOrders.forEach(order => {
-        if (order.status === 'active') {
-            const card = createOrderCard(order, false);
-            sellOrdersContainer.appendChild(card);
-        }
+        const card = createOrderCard(order, false);
+        sellOrdersContainer.appendChild(card);
     });
     
     // Добавляем обработчики для кнопок бронирования
@@ -368,27 +476,19 @@ function bookOrder(orderId, orderType) {
     const ordersArray = orderType === 'buy' ? buyOrders : sellOrders;
     const order = ordersArray.find(o => o.id === orderId);
     
-    if (order && order.status === 'active') {
-        order.status = 'booked';
+    if (order) {
+        // Устанавливаем время окончания бронирования (10 минут)
+        const bookingDuration = 10 * 60 * 1000; // 10 минут в миллисекундах
+        order.bookedUntil = Date.now() + bookingDuration;
         
-        // Обновляем кнопку
-        const button = document.querySelector(`[data-order-id="${orderId}"]`);
-        if (button) {
-            button.innerHTML = '<i class="fas fa-check"></i> Забронировано';
-            button.classList.add('booked');
-            button.disabled = true;
+        showNotification(`✅ Вы забронировали заявку ${orderId}! Время бронирования: 10 минут. Отправьте ID заявки в техническую поддержку.`);
+        
+        // Перерисовываем заявки
+        if (orderType === 'buy') {
+            renderBuyOrders();
+        } else {
+            renderSellOrders();
         }
-        
-        showNotification(`✅ Вы забронировали заявку ${orderId}! Отправьте этот ID в техническую поддержку для завершения сделки.`);
-        
-        // Обновляем списки через 2 секунды
-        setTimeout(() => {
-            if (orderType === 'buy') {
-                renderBuyOrders();
-            } else {
-                renderSellOrders();
-            }
-        }, 2000);
     }
 }
 
