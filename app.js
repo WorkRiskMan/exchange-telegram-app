@@ -51,7 +51,7 @@ const buyOrders = [
         rate: 92.5,
         rubAmount: 46250,
         counterparty: "Иван Петров",
-        exchange: "Binance",
+        exchange: "Bybit",
         status: "active"
     },
     {
@@ -71,7 +71,7 @@ const buyOrders = [
         rate: 93.2,
         rubAmount: 23300,
         counterparty: "Петр Иванов",
-        exchange: "Huobi",
+        exchange: "Bybit",
         status: "active"
     },
     {
@@ -81,7 +81,7 @@ const buyOrders = [
         rate: 90.5,
         rubAmount: 67875,
         counterparty: "Мария Козлова",
-        exchange: "OKX",
+        exchange: "Bybit",
         status: "active"
     },
     {
@@ -91,7 +91,7 @@ const buyOrders = [
         rate: 92.0,
         rubAmount: 110400,
         counterparty: "Сергей Смирнов",
-        exchange: "Binance",
+        exchange: "Bybit",
         status: "active"
     }
 ];
@@ -645,3 +645,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
+
