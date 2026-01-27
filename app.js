@@ -262,56 +262,91 @@ function createOrderCard(order, isBuyPage) {
     const typeClass = isBuyPage ? 'buy' : 'sell';
     
     card.innerHTML = `
-        <div class="order-header">
-            <div class="order-id">ID: ${order.id}</div>
-            <div class="order-type ${typeClass}">${typeText}</div>
-        </div>
-        
-        <div class="order-details">
-            <div class="order-detail">
-                <div class="detail-label">Объем USDT</div>
-                <div class="detail-value volume">${order.volume.toLocaleString('ru-RU')} USDT</div>
-            </div>
-            <div class="order-detail">
-                <div class="detail-label">Курс обмена</div>
-                <div class="detail-value highlight">${order.rate} RUB/USDT</div>
-            </div>
-            <div class="order-detail">
-                <div class="detail-label">Сумма в рублях</div>
-                <div class="detail-value amount">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
-            </div>
-            <div class="order-detail">
-                <div class="detail-label">Статус заявки</div>
-                <div class="detail-value">${order.status === 'active' ? 'Активна' : 'Забронирована'}</div>
-            </div>
-        </div>
-        
-        <div class="order-info-row">
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-user"></i>
+        <!-- Свернутая часть заявки -->
+        <div class="order-header-collapsed" data-order-id="${order.id}">
+            <div class="order-id">${order.id}</div>
+            <div class="order-info-collapsed">
+                <div class="collapsed-info-item">
+                    <div class="collapsed-label">Объем</div>
+                    <div class="collapsed-value volume">${order.volume.toLocaleString('ru-RU')} USDT</div>
                 </div>
-                <div class="info-text">
-                    <h4>Контрагент</h4>
-                    <p>${order.counterparty}</p>
+                <div class="collapsed-info-item">
+                    <div class="collapsed-label">Курс</div>
+                    <div class="collapsed-value rate">${order.rate} RUB</div>
+                </div>
+                <div class="collapsed-info-item">
+                    <div class="collapsed-label">Сумма</div>
+                    <div class="collapsed-value amount">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
+                </div>
+                <div class="collapsed-info-item">
+                    <div class="collapsed-label">Статус</div>
+                    <div class="order-status ${order.status === 'active' ? 'status-active' : 'status-booked'}">
+                        <i class="fas fa-circle"></i>
+                        ${order.status === 'active' ? 'Активна' : 'Забронирована'}
+                    </div>
+                </div>
+            </div>
+            <button class="order-toggle" data-order-id="${order.id}">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+        
+        <!-- Развернутая часть заявки (скрыта по умолчанию) -->
+        <div class="order-details-expanded" id="details-${order.id}">
+            <div class="order-details-grid">
+                <div class="order-detail-item">
+                    <div class="detail-label">ID заявки</div>
+                    <div class="detail-value">${order.id}</div>
+                </div>
+                <div class="order-detail-item">
+                    <div class="detail-label">Тип операции</div>
+                    <div class="detail-value">${typeText}</div>
+                </div>
+                <div class="order-detail-item">
+                    <div class="detail-label">Объем USDT</div>
+                    <div class="detail-value volume">${order.volume.toLocaleString('ru-RU')} USDT</div>
+                </div>
+                <div class="order-detail-item">
+                    <div class="detail-label">Курс обмена</div>
+                    <div class="detail-value highlight">${order.rate} RUB/USDT</div>
+                </div>
+                <div class="order-detail-item">
+                    <div class="detail-label">Сумма в рублях</div>
+                    <div class="detail-value amount">${order.rubAmount.toLocaleString('ru-RU')} ₽</div>
+                </div>
+                <div class="order-detail-item">
+                    <div class="detail-label">Статус заявки</div>
+                    <div class="detail-value">${order.status === 'active' ? 'Активна' : 'Забронирована'}</div>
                 </div>
             </div>
             
-            <div class="info-item">
-                <div class="info-icon">
-                    <i class="fas fa-exchange-alt"></i>
+            <div class="order-parties">
+                <div class="party-info">
+                    <div class="party-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="party-text">
+                        <h4>Контрагент</h4>
+                        <p>${order.counterparty}</p>
+                    </div>
                 </div>
-                <div class="info-text">
-                    <h4>Биржа</h4>
-                    <p>${order.exchange}</p>
+                
+                <div class="party-info">
+                    <div class="party-avatar">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="party-text">
+                        <h4>Биржа</h4>
+                        <p>${order.exchange}</p>
+                    </div>
                 </div>
             </div>
+            
+            <button class="copy-id-btn" data-order-id="${order.id}">
+                <i class="fas fa-copy"></i>
+                Скопировать ID
+            </button>
         </div>
-        
-        <button class="copy-id-btn" data-order-id="${order.id}">
-            <i class="fas fa-copy"></i>
-            Скопировать ID
-        </button>
     `;
     
     return card;
@@ -370,6 +405,26 @@ function copyToClipboard(text) {
     }
 }
 
+// Переключение видимости деталей заявки
+function toggleOrderDetails(orderId) {
+    const detailsElement = document.getElementById(`details-${orderId}`);
+    const toggleButton = document.querySelector(`.order-toggle[data-order-id="${orderId}"]`);
+    
+    if (detailsElement && toggleButton) {
+        if (detailsElement.style.display === 'block') {
+            // Скрываем детали
+            detailsElement.style.display = 'none';
+            toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            toggleButton.classList.remove('expanded');
+        } else {
+            // Показываем детали
+            detailsElement.style.display = 'block';
+            toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            toggleButton.classList.add('expanded');
+        }
+    }
+}
+
 // Рендеринг заявок на покупку
 function renderBuyOrders() {
     buyOrdersContainer.innerHTML = '';
@@ -386,6 +441,26 @@ function renderBuyOrders() {
     
     // Обновляем активную кнопку сортировки
     updateSortButtons(buySortOptions, currentBuySort);
+    
+    // Добавляем обработчики для заголовков заявок (развертывание)
+    document.querySelectorAll('#buyOrdersContainer .order-header-collapsed').forEach(header => {
+        header.addEventListener('click', function(e) {
+            // Проверяем, не кликнули ли на саму кнопку toggle
+            if (!e.target.closest('.order-toggle')) {
+                const orderId = this.getAttribute('data-order-id');
+                toggleOrderDetails(orderId);
+            }
+        });
+    });
+    
+    // Добавляем обработчики для кнопок toggle
+    document.querySelectorAll('#buyOrdersContainer .order-toggle').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Останавливаем всплытие, чтобы не сработал обработчик на header
+            const orderId = this.getAttribute('data-order-id');
+            toggleOrderDetails(orderId);
+        });
+    });
     
     // Добавляем обработчики для кнопок копирования ID
     document.querySelectorAll('#buyOrdersContainer .copy-id-btn').forEach(btn => {
@@ -428,6 +503,26 @@ function renderSellOrders() {
     
     // Обновляем активную кнопку сортировки
     updateSortButtons(sellSortOptions, currentSellSort);
+    
+    // Добавляем обработчики для заголовков заявок (развертывание)
+    document.querySelectorAll('#sellOrdersContainer .order-header-collapsed').forEach(header => {
+        header.addEventListener('click', function(e) {
+            // Проверяем, не кликнули ли на саму кнопку toggle
+            if (!e.target.closest('.order-toggle')) {
+                const orderId = this.getAttribute('data-order-id');
+                toggleOrderDetails(orderId);
+            }
+        });
+    });
+    
+    // Добавляем обработчики для кнопок toggle
+    document.querySelectorAll('#sellOrdersContainer .order-toggle').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Останавливаем всплытие, чтобы не сработал обработчик на header
+            const orderId = this.getAttribute('data-order-id');
+            toggleOrderDetails(orderId);
+        });
+    });
     
     // Добавляем обработчики для кнопок копирования ID
     document.querySelectorAll('#sellOrdersContainer .copy-id-btn').forEach(btn => {
