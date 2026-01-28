@@ -1810,3 +1810,182 @@ body {
     }
 }
 
+
+/* ... все предыдущие стили остаются без изменений ... */
+
+/* Информационная плашка на странице обменника */
+.exchange-info-panel {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(74, 0, 130, 0.1) 100%);
+    border: 2px solid #8a2be2;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 25px;
+    animation: fadeIn 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.exchange-info-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8a2be2, #ff69b4, #8a2be2);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.exchange-info-panel .info-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    color: #8a2be2;
+    opacity: 0.7;
+}
+
+.exchange-info-panel .info-content h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exchange-info-panel .info-content h4::before {
+    content: '📋';
+    font-size: 20px;
+}
+
+.exchange-info-panel .info-content p {
+    color: #aaa;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.exchange-info-panel .info-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.exchange-info-panel .info-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    flex: 1;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.exchange-info-panel .info-link:hover {
+    background: linear-gradient(135deg, #9b42e6 0%, #5b0099 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+}
+
+.exchange-info-panel .info-link:active {
+    transform: translateY(-1px);
+}
+
+.exchange-info-panel .info-link i {
+    font-size: 16px;
+}
+
+.exchange-info-panel .info-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ff69b4;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 12px 15px;
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 10px;
+    border-left: 3px solid #ff69b4;
+}
+
+.exchange-info-panel .info-note i {
+    color: #ff69b4;
+    font-size: 16px;
+}
+
+/* Анимация появления плашки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность для плашки */
+@media (max-width: 768px) {
+    .exchange-info-panel {
+        padding: 15px;
+        margin-top: 20px;
+    }
+    
+    .exchange-info-panel .info-links {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .exchange-info-panel .info-link {
+        min-width: 100%;
+        padding: 15px;
+    }
+    
+    .exchange-info-panel .info-content h4 {
+        font-size: 16px;
+    }
+    
+    .exchange-info-panel .info-content p {
+        font-size: 14px;
+    }
+    
+    .exchange-info-panel .info-note {
+        font-size: 13px;
+        padding: 10px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 400px) {
+    .exchange-info-panel {
+        padding: 12px;
+    }
+    
+    .exchange-info-panel .info-link {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+    
+    .exchange-info-panel .info-link i {
+        font-size: 14px;
+    }
+}
+
