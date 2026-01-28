@@ -1,3 +1,5 @@
+[file name]: index.html
+[file content begin]
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -304,6 +306,153 @@
         </main>
     </div>
 
+    <!-- Страница поддержки -->
+    <div class="app-container" id="supportPage" style="display: none;">
+        <header class="main-header">
+            <div class="logo-container">
+                <button class="back-btn" id="backFromSupportBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="app-title">Поддержка</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content support-page">
+            <div class="page-header">
+                <h2>Техническая поддержка</h2>
+                <p class="page-subtitle">Свяжитесь с нами для решения любых вопросов</p>
+            </div>
+
+            <!-- Важное уведомление -->
+            <div class="support-notice">
+                <div class="notice-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Важная информация</h3>
+                </div>
+                <p>Пожалуйста, обращайтесь в поддержку <strong>строго по делу</strong> и уважительно. Наши специалисты работают для вашего удобства.</p>
+            </div>
+
+            <!-- Контакты поддержки -->
+            <div class="support-contacts">
+                <h3 class="section-title">
+                    <i class="fas fa-headset"></i>
+                    Контакты поддержки
+                </h3>
+
+                <div class="contact-card support">
+                    <div class="contact-icon">
+                        <i class="fas fa-life-ring"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Основная поддержка</h4>
+                        <p class="contact-description">По всем вопросам по заявкам, обменам и техническим проблемам</p>
+                        <a href="https://t.me/peertopeer_support" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            @peertopeer_support
+                        </a>
+                        <p class="contact-hours">
+                            <i class="fas fa-clock"></i>
+                            Работаем 24/7
+                        </p>
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 30px;">
+                    <i class="fas fa-user-shield"></i>
+                    Модераторы
+                </h3>
+
+                <div class="contact-card moderator">
+                    <div class="contact-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Модератор 1</h4>
+                        <p class="contact-description">Решение спорных ситуаций, проверка контрагентов</p>
+                        <a href="https://t.me/peer_moderator1" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            @peer_moderator1
+                        </a>
+                        <p class="contact-hours">
+                            <i class="fas fa-clock"></i>
+                            10:00 - 22:00 (МСК)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-card moderator">
+                    <div class="contact-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Модератор 2</h4>
+                        <p class="contact-description">Проверка сделок, помощь новичкам</p>
+                        <a href="https://t.me/peer_moderator2" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            @peer_moderator2
+                        </a>
+                        <p class="contact-hours">
+                            <i class="fas fa-clock"></i>
+                            12:00 - 00:00 (МСК)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правила обращения -->
+            <div class="support-rules">
+                <h3 class="section-title">
+                    <i class="fas fa-list-alt"></i>
+                    Правила обращения
+                </h3>
+                <ul class="rules-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Всегда указывайте <strong>ID заявки</strong> при обращении</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Описывайте проблему <strong>четко и подробно</strong></span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Прикладывайте скриншоты при необходимости</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Сохраняйте <strong>уважительный тон</strong> общения</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Ожидайте ответ в течение <strong>15-30 минут</strong></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Кнопки быстрого действия -->
+            <div class="quick-actions">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Быстрые действия
+                </h3>
+                <div class="action-buttons">
+                    <button class="action-btn" id="copySupportLink">
+                        <i class="fas fa-copy"></i>
+                        Скопировать ссылку поддержки
+                    </button>
+                    <button class="action-btn" id="openSupportChat">
+                        <i class="fab fa-telegram"></i>
+                        Открыть чат с поддержкой
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <!-- Общее уведомление -->
     <div class="notification" id="notification">
         <div class="notification-content">
@@ -315,4 +464,4 @@
     <script src="app.js"></script>
 </body>
 </html>
-
+[file content end]
