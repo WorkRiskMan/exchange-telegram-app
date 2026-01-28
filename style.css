@@ -1164,3 +1164,322 @@ body {
 }
 
 /* ... остальные стили остаются без изменений ... */
+
+
+
+
+
+[file name]: style.css
+[file content begin]
+/* ... все предыдущие стили остаются без изменений ... */
+
+/* Страница поддержки */
+.support-page {
+    flex: 1;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.page-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff69b4 0%, #da70d6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
+    color: #aaa;
+    font-size: 16px;
+}
+
+/* Важное уведомление */
+.support-notice {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+    border: 2px solid #ff9800;
+    border-radius: 15px;
+    padding: 20px;
+    animation: pulseNotice 2s infinite;
+}
+
+@keyframes pulseNotice {
+    0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.2); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 152, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+
+.notice-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.notice-header i {
+    font-size: 24px;
+    color: #ff9800;
+}
+
+.notice-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ff9800;
+}
+
+.support-notice p {
+    color: #ffcc80;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Секции */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.section-title i {
+    color: #8a2be2;
+    font-size: 22px;
+}
+
+/* Контактные карточки */
+.support-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #8a2be2;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2);
+}
+
+.contact-card.support {
+    border-left: 4px solid #8a2be2;
+}
+
+.contact-card.moderator {
+    border-left: 4px solid #00c853;
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.contact-card.moderator .contact-icon {
+    background: linear-gradient(135deg, #00c853 0%, #64dd17 100%);
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.contact-description {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #0088cc 0%, #0055aa 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    margin-bottom: 12px;
+}
+
+.contact-link:hover {
+    background: linear-gradient(135deg, #0099ee 0%, #0066cc 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+}
+
+.contact-link i {
+    font-size: 18px;
+}
+
+.contact-hours {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.contact-hours i {
+    color: #ff69b4;
+}
+
+/* Правила обращения */
+.support-rules {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rules-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rules-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.rules-list i {
+    color: #00c853;
+    font-size: 18px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.rules-list span {
+    color: #ddd;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.rules-list strong {
+    color: white;
+    font-weight: 600;
+}
+
+/* Быстрые действия */
+.quick-actions {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.action-btn {
+    padding: 18px 25px;
+    background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.action-btn:hover {
+    background: linear-gradient(135deg, #9b42e6 0%, #5b0099 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+}
+
+.action-btn:active {
+    transform: translateY(-1px);
+}
+
+.action-btn i {
+    font-size: 18px;
+}
+
+/* Адаптивность для страницы поддержки */
+@media (max-width: 600px) {
+    .support-page {
+        padding: 0 20px;
+        gap: 20px;
+    }
+    
+    .page-header h2 {
+        font-size: 22px;
+    }
+    
+    .contact-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .contact-info {
+        width: 100%;
+    }
+    
+    .contact-link {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .rules-list li {
+        align-items: flex-start;
+    }
+    
+    .action-btn {
+        padding: 16px 20px;
+        font-size: 15px;
+    }
+}
+[file content end]
