@@ -18,13 +18,15 @@ const mainPage = document.getElementById('mainPage');
 const exchangePage = document.getElementById('exchangePage');
 const buyUsdtPage = document.getElementById('buyUsdtPage');
 const sellUsdtPage = document.getElementById('sellUsdtPage');
-const supportPage = document.getElementById('supportPage'); // Новая страница
+const supportPage = document.getElementById('supportPage');
+const navigationPage = document.getElementById('navigationPage'); // Новая страница
 
 // Элементы DOM - Кнопки навигации
 const backBtn = document.getElementById('backBtn');
 const backFromBuyBtn = document.getElementById('backFromBuyBtn');
 const backFromSellBtn = document.getElementById('backFromSellBtn');
-const backFromSupportBtn = document.getElementById('backFromSupportBtn'); // Новая кнопка
+const backFromSupportBtn = document.getElementById('backFromSupportBtn');
+const backFromNavigationBtn = document.getElementById('backFromNavigationBtn'); // Новая кнопка
 const usdtRubOption = document.getElementById('usdtRubOption');
 const otherAssetsOption = document.getElementById('otherAssetsOption');
 const usdtRubSubButtons = document.getElementById('usdtRubSubButtons');
@@ -43,6 +45,12 @@ const sellOrdersContainer = document.getElementById('sellOrdersContainer');
 // Элементы DOM - Страница поддержки
 const copySupportLinkBtn = document.getElementById('copySupportLink');
 const openSupportChatBtn = document.getElementById('openSupportChat');
+
+// Элементы DOM - Страница навигации
+const copyBotLinkBtn = document.getElementById('copyBotLink');
+const copyAllLinksBtn = document.getElementById('copyAllLinks');
+const openChannelBtn = document.getElementById('openChannel');
+const openChatBtn = document.getElementById('openChat');
 
 // ============================================
 // МАССИВ ЗАЯВОК - ВОТ ЭТО МЕСТО МОЖНО РЕДАКТИРОВАТЬ!
@@ -219,12 +227,19 @@ function goToSupportPage() {
     tg.BackButton.show();
 }
 
+function goToNavigationPage() {
+    hideAllPages();
+    navigationPage.style.display = 'flex';
+    tg.BackButton.show();
+}
+
 function hideAllPages() {
     mainPage.style.display = 'none';
     exchangePage.style.display = 'none';
     buyUsdtPage.style.display = 'none';
     sellUsdtPage.style.display = 'none';
-    supportPage.style.display = 'none'; // Новая страница
+    supportPage.style.display = 'none';
+    navigationPage.style.display = 'none'; // Новая страница
     usdtRubSubButtons.style.display = 'none';
     otherAssetsPanel.style.display = 'none';
     usdtRubOpen = false;
@@ -570,7 +585,7 @@ exchangeBtn.addEventListener('click', function() {
 
 navigationBtn.addEventListener('click', function() {
     animateButton(this);
-    showNotification('Навигация по обменным пунктам... В разработке');
+    goToNavigationPage(); // Изменено: теперь переходит на страницу навигации
 });
 
 accountBtn.addEventListener('click', function() {
@@ -585,14 +600,15 @@ premiumBtn.addEventListener('click', function() {
 
 supportBtn.addEventListener('click', function() {
     animateButton(this);
-    goToSupportPage(); // Изменено: теперь переходит на страницу поддержки
+    goToSupportPage();
 });
 
 // Обработчики событий для страницы обменника
 backBtn.addEventListener('click', goToMainPage);
 backFromBuyBtn.addEventListener('click', goToExchangePage);
 backFromSellBtn.addEventListener('click', goToExchangePage);
-backFromSupportBtn.addEventListener('click', goToMainPage); // Новая кнопка
+backFromSupportBtn.addEventListener('click', goToMainPage);
+backFromNavigationBtn.addEventListener('click', goToMainPage); // Новая кнопка
 
 usdtRubOption.addEventListener('click', toggleUsdtRubPanel);
 otherAssetsOption.addEventListener('click', toggleOtherAssetsPanel);
@@ -661,6 +677,85 @@ openSupportChatBtn.addEventListener('click', function() {
     }, 500);
 });
 
+// Обработчики для страницы навигации
+copyBotLinkBtn.addEventListener('click', function() {
+    animateButton(this);
+    const botLink = 'https://t.me/peertopeer_bot';
+    
+    if (copyToClipboard(botLink)) {
+        // Меняем стиль кнопки на короткое время
+        this.innerHTML = '<i class="fas fa-check"></i> Ссылка скопирована';
+        this.classList.add('copied');
+        
+        showNotification('Ссылка на бота скопирована в буфер обмена!');
+        
+        // Возвращаем исходный вид кнопки через 2 секунды
+        setTimeout(() => {
+            this.innerHTML = '<i class="fab fa-telegram"></i> Скопировать ссылку';
+            this.classList.remove('copied');
+        }, 2000);
+    } else {
+        showNotification('Не удалось скопировать ссылку. Попробуйте еще раз.');
+    }
+});
+
+copyAllLinksBtn.addEventListener('click', function() {
+    animateButton(this);
+    
+    const allLinks = `
+📌 Peer-to-peer - Все ссылки:
+
+📢 Официальный канал: https://t.me/peertopeer_official
+💬 Общий чат: https://t.me/peertopeer_chat
+📝 Блог в Telegra.ph: https://telegra.ph/Peer-to-peer-Blog
+🛠 Техническая поддержка: https://t.me/peertopeer_support
+🤖 Этот бот: https://t.me/peertopeer_bot
+💻 GitHub: https://github.com/peertopeer
+
+📚 Полезные материалы:
+🎓 20 постов для новичков: https://telegra.ph/Dvadcat-postov-dlya-novichkov-01-01
+🛒 Первая покупка: https://telegra.ph/Pervaya-pokupka-kriptovaluty-01-01
+💰 Первая продажа: https://telegra.ph/Pervaya-prodazha-kriptovaluty-01-01
+📖 Обязательные посты: https://telegra.ph/Obyazatelnye-posty-01-01
+📋 Регламент: https://telegra.ph/Reglament-Peer-to-peer-01-01
+⚙️ Необходимые инструкции: https://telegra.ph/Neobhodimye-instrukcii-01-01
+    `;
+    
+    if (copyToClipboard(allLinks)) {
+        // Меняем стиль кнопки на короткое время
+        this.innerHTML = '<i class="fas fa-check"></i> Все ссылки скопированы';
+        this.classList.add('copied');
+        
+        showNotification('Все ссылки проекта скопированы в буфер обмена!');
+        
+        // Возвращаем исходный вид кнопки через 2 секунды
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-copy"></i> Скопировать все ссылки';
+            this.classList.remove('copied');
+        }, 2000);
+    } else {
+        showNotification('Не удалось скопировать ссылки. Попробуйте еще раз.');
+    }
+});
+
+openChannelBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Открываю официальный канал...');
+    
+    setTimeout(() => {
+        showNotification('Перейдите по ссылке: @peertopeer_official');
+    }, 500);
+});
+
+openChatBtn.addEventListener('click', function() {
+    animateButton(this);
+    showNotification('Открываю общий чат...');
+    
+    setTimeout(() => {
+        showNotification('Перейдите по ссылке: @peertopeer_chat');
+    }, 500);
+});
+
 // Обработка кнопки "Назад" в Telegram
 tg.BackButton.onClick(() => {
     if (buyUsdtPage.style.display === 'flex') {
@@ -669,7 +764,9 @@ tg.BackButton.onClick(() => {
         goToExchangePage();
     } else if (exchangePage.style.display === 'flex') {
         goToMainPage();
-    } else if (supportPage.style.display === 'flex') { // Новая страница
+    } else if (supportPage.style.display === 'flex') {
+        goToMainPage();
+    } else if (navigationPage.style.display === 'flex') { // Новая страница
         goToMainPage();
     }
 });
@@ -696,5 +793,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
-
-
