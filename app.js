@@ -19,14 +19,14 @@ const exchangePage = document.getElementById('exchangePage');
 const buyUsdtPage = document.getElementById('buyUsdtPage');
 const sellUsdtPage = document.getElementById('sellUsdtPage');
 const supportPage = document.getElementById('supportPage');
-const navigationPage = document.getElementById('navigationPage'); // Новая страница
+const navigationPage = document.getElementById('navigationPage');
 
 // Элементы DOM - Кнопки навигации
 const backBtn = document.getElementById('backBtn');
 const backFromBuyBtn = document.getElementById('backFromBuyBtn');
 const backFromSellBtn = document.getElementById('backFromSellBtn');
 const backFromSupportBtn = document.getElementById('backFromSupportBtn');
-const backFromNavigationBtn = document.getElementById('backFromNavigationBtn'); // Новая кнопка
+const backFromNavigationBtn = document.getElementById('backFromNavigationBtn');
 const usdtRubOption = document.getElementById('usdtRubOption');
 const otherAssetsOption = document.getElementById('otherAssetsOption');
 const usdtRubSubButtons = document.getElementById('usdtRubSubButtons');
@@ -51,6 +51,9 @@ const copyBotLinkBtn = document.getElementById('copyBotLink');
 const copyAllLinksBtn = document.getElementById('copyAllLinks');
 const openChannelBtn = document.getElementById('openChannel');
 const openChatBtn = document.getElementById('openChat');
+
+// Элементы DOM - Информационная плашка обменника
+const exchangeInfoPanel = document.querySelector('.exchange-info-panel');
 
 // ============================================
 // МАССИВ ЗАЯВОК - ВОТ ЭТО МЕСТО МОЖНО РЕДАКТИРОВАТЬ!
@@ -239,7 +242,7 @@ function hideAllPages() {
     buyUsdtPage.style.display = 'none';
     sellUsdtPage.style.display = 'none';
     supportPage.style.display = 'none';
-    navigationPage.style.display = 'none'; // Новая страница
+    navigationPage.style.display = 'none';
     usdtRubSubButtons.style.display = 'none';
     otherAssetsPanel.style.display = 'none';
     usdtRubOpen = false;
@@ -585,7 +588,7 @@ exchangeBtn.addEventListener('click', function() {
 
 navigationBtn.addEventListener('click', function() {
     animateButton(this);
-    goToNavigationPage(); // Изменено: теперь переходит на страницу навигации
+    goToNavigationPage();
 });
 
 accountBtn.addEventListener('click', function() {
@@ -608,7 +611,7 @@ backBtn.addEventListener('click', goToMainPage);
 backFromBuyBtn.addEventListener('click', goToExchangePage);
 backFromSellBtn.addEventListener('click', goToExchangePage);
 backFromSupportBtn.addEventListener('click', goToMainPage);
-backFromNavigationBtn.addEventListener('click', goToMainPage); // Новая кнопка
+backFromNavigationBtn.addEventListener('click', goToMainPage);
 
 usdtRubOption.addEventListener('click', toggleUsdtRubPanel);
 otherAssetsOption.addEventListener('click', toggleOtherAssetsPanel);
@@ -756,6 +759,38 @@ openChatBtn.addEventListener('click', function() {
     }, 500);
 });
 
+// Обработчики для информационной плашки обменника
+if (exchangeInfoPanel) {
+    // Находим ссылки в плашке
+    const infoLinks = exchangeInfoPanel.querySelectorAll('.info-link');
+    
+    infoLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            const linkText = this.textContent.trim();
+            
+            // Анимируем нажатие
+            animateButton(this);
+            
+            // Показываем уведомление
+            showNotification(`Открываю ${linkText}...`);
+            
+            // В реальном приложении можно открыть ссылку
+            // window.open(href, '_blank');
+            
+            // Для демонстрации покажем сообщение
+            setTimeout(() => {
+                if (linkText.includes('Регламент')) {
+                    showNotification('Перейдите по ссылке: telegra.ph/Reglament-Peer-to-peer-01-01');
+                } else if (linkText.includes('Инструкция')) {
+                    showNotification('Перейдите по ссылке: telegra.ph/Instrukciya-po-obmenu-01-01');
+                }
+            }, 500);
+        });
+    });
+}
+
 // Обработка кнопки "Назад" в Telegram
 tg.BackButton.onClick(() => {
     if (buyUsdtPage.style.display === 'flex') {
@@ -766,7 +801,7 @@ tg.BackButton.onClick(() => {
         goToMainPage();
     } else if (supportPage.style.display === 'flex') {
         goToMainPage();
-    } else if (navigationPage.style.display === 'flex') { // Новая страница
+    } else if (navigationPage.style.display === 'flex') {
         goToMainPage();
     }
 });
