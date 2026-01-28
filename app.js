@@ -1,5 +1,3 @@
-[file name]: app.js
-[file content begin]
 // Инициализация Telegram Web App
 const tg = window.Telegram.WebApp;
 tg.expand();
@@ -698,5 +696,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
-[file content end]
+
 
