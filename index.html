@@ -451,6 +451,246 @@
         </main>
     </div>
 
+    <!-- Страница навигации -->
+    <div class="app-container" id="navigationPage" style="display: none;">
+        <header class="main-header">
+            <div class="logo-container">
+                <button class="back-btn" id="backFromNavigationBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="app-title">Навигация</h1>
+                <div class="premium-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>PRO</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content navigation-page">
+            <div class="page-header">
+                <h2>Навигация по проекту</h2>
+                <p class="page-subtitle">Все важные ссылки и ресурсы в одном месте</p>
+            </div>
+
+            <!-- Блок 1: Наши ресурсы -->
+            <div class="navigation-section">
+                <h3 class="section-title">
+                    <i class="fas fa-link"></i>
+                    Наши ресурсы
+                </h3>
+                <p class="section-description">Официальные каналы и чаты проекта Peer-to-peer</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Официальный канал</h4>
+                            <p class="resource-description">Новости, анонсы, полезная информация</p>
+                            <a href="https://t.me/peertopeer_official" class="resource-link" target="_blank">
+                                <i class="fab fa-telegram"></i>
+                                @peertopeer_official
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Общий чат</h4>
+                            <p class="resource-description">Общение, вопросы, обмен опытом</p>
+                            <a href="https://t.me/peertopeer_chat" class="resource-link" target="_blank">
+                                <i class="fab fa-telegram"></i>
+                                @peertopeer_chat
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Блог в Telegra.ph</h4>
+                            <p class="resource-description">Статьи, инструкции, аналитика</p>
+                            <a href="https://telegra.ph/Peer-to-peer-Blog" class="resource-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Перейти в блог
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Техническая поддержка</h4>
+                            <p class="resource-description">Решение проблем и вопросов</p>
+                            <a href="https://t.me/peertopeer_support" class="resource-link" target="_blank">
+                                <i class="fab fa-telegram"></i>
+                                @peertopeer_support
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Этот бот</h4>
+                            <p class="resource-description">Основной бот для обменов</p>
+                            <button class="resource-link bot-link" id="copyBotLink">
+                                <i class="fab fa-telegram"></i>
+                                Скопировать ссылку
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-github"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>GitHub проекта</h4>
+                            <p class="resource-description">Исходный код и документация</p>
+                            <a href="https://github.com/peertopeer" class="resource-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                github.com/peertopeer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 2: Полезная навигация -->
+            <div class="navigation-section">
+                <h3 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Полезная навигация
+                </h3>
+                <p class="section-description">Важные материалы для всех участников</p>
+                
+                <div class="useful-links">
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>20 постов для новичков</h4>
+                            <p>Основы работы с криптовалютой, безопасность, первые шаги</p>
+                            <a href="https://telegra.ph/Dvadcat-postov-dlya-novichkov-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>Первая покупка</h4>
+                            <p>Пошаговая инструкция по первой покупке криптовалюты</p>
+                            <a href="https://telegra.ph/Pervaya-pokupka-kriptovaluty-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Инструкция
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>Первая продажа</h4>
+                            <p>Как безопасно продать криптовалюту и получить деньги</p>
+                            <a href="https://telegra.ph/Pervaya-prodazha-kriptovaluty-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Инструкция
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>Обязательные посты</h4>
+                            <p>Правила проекта, политика безопасности, FAQ</p>
+                            <a href="https://telegra.ph/Obyazatelnye-posty-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>Регламент</h4>
+                            <p>Правила проведения сделок и взаимодействия</p>
+                            <a href="https://telegra.ph/Reglament-Peer-to-peer-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Открыть
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="useful-link-card">
+                        <div class="useful-link-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="useful-link-content">
+                            <h4>Необходимые инструкции</h4>
+                            <p>Настройки, безопасность, работа с кошельками</p>
+                            <a href="https://telegra.ph/Neobhodimye-instrukcii-01-01" class="useful-link-btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Смотреть
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Быстрые действия -->
+            <div class="quick-actions-navigation">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Быстрые действия
+                </h3>
+                <div class="action-buttons">
+                    <button class="action-btn" id="copyAllLinks">
+                        <i class="fas fa-copy"></i>
+                        Скопировать все ссылки
+                    </button>
+                    <button class="action-btn" id="openChannel">
+                        <i class="fab fa-telegram"></i>
+                        Открыть канал
+                    </button>
+                    <button class="action-btn" id="openChat">
+                        <i class="fas fa-comments"></i>
+                        Открыть чат
+                    </button>
+                </div>
+            </div>
+
+            <!-- Примечание -->
+            <div class="navigation-notice">
+                <p><i class="fas fa-info-circle"></i> Все ссылки открываются в браузере. Для удобства добавьте основные каналы в избранное в Telegram.</p>
+            </div>
+        </main>
+    </div>
+
     <!-- Общее уведомление -->
     <div class="notification" id="notification">
         <div class="notification-content">
@@ -462,4 +702,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
