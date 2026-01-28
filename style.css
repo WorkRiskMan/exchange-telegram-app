@@ -1169,8 +1169,7 @@ body {
 
 
 
-[file name]: style.css
-[file content begin]
+
 /* ... все предыдущие стили остаются без изменений ... */
 
 /* Страница поддержки */
@@ -1482,4 +1481,5 @@ body {
         font-size: 15px;
     }
 }
-[file content end]
+
+
