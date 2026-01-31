@@ -826,8 +826,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+
+
+// Добавляем звездочки для эффекта мерцания
+document.addEventListener('DOMContentLoaded', function() {
+    const title = document.querySelector('#mainPage .app-title');
+    if (title) {
+        // Создаем звездочки
+        for (let i = 0; i < 4; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            title.appendChild(star);
+        }
+        
+        // Эффект случайного мерцания букв
+        setInterval(() => {
+            const letters = document.querySelectorAll('#mainPage .letter');
+            if (letters.length > 0) {
+                const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                randomLetter.style.animation = 'none';
+                setTimeout(() => {
+                    randomLetter.style.animation = '';
+                }, 100);
+            }
+        }, 2000);
+    }
+});
+
+
+
+
+
+
+
 // Инициализация приложения
 tg.ready();
+
 
 
 
