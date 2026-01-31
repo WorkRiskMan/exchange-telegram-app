@@ -89,7 +89,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "Inactive"
+        status: "active"
     },
     {
         id: "BUY-004",
@@ -99,7 +99,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "Inactive"
+        status: "active"
     },
     {
         id: "BUY-005",
@@ -109,7 +109,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "Inactive"
+        status: "active"
     }
 ];
 
@@ -143,7 +143,7 @@ const sellOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "Inactive"
+        status: "active"
     },
     {
         id: "SELL-004",
@@ -153,18 +153,18 @@ const sellOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "Inactive"
+        status: "active"
     },
-    {
-        id: "SELL-005",
-        type: "sell",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "Inactive"
-    }
+    //{
+    //    id: "SELL-005",
+    //    type: "sell",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //}
 ];
 
 // ============================================
@@ -828,6 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
+
 
 
 
