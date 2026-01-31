@@ -89,7 +89,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "active"
+        status: "Inactive"
     },
     {
         id: "BUY-004",
@@ -99,7 +99,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "active"
+        status: "Inactive"
     },
     {
         id: "BUY-005",
@@ -109,7 +109,7 @@ const buyOrders = [
         rubAmount: 0,
         counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "active"
+        status: "Inactive"
     }
 ];
 
@@ -118,52 +118,52 @@ const sellOrders = [
     {
         id: "SELL-001",
         type: "sell",
-        volume: 300,
-        rate: 89.5,
-        rubAmount: 26850,
-        counterparty: "Алексей Волков",
+        volume: 1000,
+        rate: 0,
+        rubAmount: 5000,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     },
     {
         id: "SELL-002",
         type: "sell",
-        volume: 800,
-        rate: 88.7,
-        rubAmount: 70960,
-        counterparty: "Елена Новикова",
-        exchange: "Binance",
+        volume: 1000,
+        rate: 0,
+        rubAmount: 12000,
+        counterparty: "Peer-to-peer",
+        exchange: "Bybit",
         status: "active"
     },
     {
         id: "SELL-003",
         type: "sell",
-        volume: 450,
-        rate: 90.1,
-        rubAmount: 40545,
-        counterparty: "Дмитрий Федоров",
-        exchange: "Huobi",
-        status: "active"
+        volume: 0,
+        rate: 0,
+        rubAmount: 0,
+        counterparty: "Peer-to-peer",
+        exchange: "Bybit",
+        status: "Inactive"
     },
     {
         id: "SELL-004",
         type: "sell",
-        volume: 600,
-        rate: 89.0,
-        rubAmount: 53400,
-        counterparty: "Ольга Морозова",
-        exchange: "OKX",
-        status: "active"
+        volume: 0,
+        rate: 0,
+        rubAmount: 0,
+        counterparty: "Peer-to-peer",
+        exchange: "Bybit",
+        status: "Inactive"
     },
     {
         id: "SELL-005",
         type: "sell",
-        volume: 950,
-        rate: 88.2,
-        rubAmount: 83790,
-        counterparty: "Николай Павлов",
+        volume: 0,
+        rate: 0,
+        rubAmount: 0,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
-        status: "active"
+        status: "Inactive"
     }
 ];
 
@@ -828,5 +828,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
+
 
 
