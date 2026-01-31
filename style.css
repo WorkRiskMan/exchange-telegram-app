@@ -1990,121 +1990,308 @@ body {
 }
 
 
-/* Анимация для заголовка Peer-to-peer на главной странице */
+/* ============================================
+   СУПЕР АНИМАЦИЯ ЗАГОЛОВКА PEER-TO-PEER
+   ============================================ */
+
 #mainPage .app-title {
     position: relative;
-    background: linear-gradient(135deg, 
-        #ff69b4 0%, 
-        #da70d6 25%, 
-        #8a2be2 50%, 
-        #4b0082 75%, 
-        #ff69b4 100%);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradientFlow 8s ease infinite, 
-               pulseTitle 3s ease-in-out infinite,
-               textGlow 4s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
-    letter-spacing: 1px;
+    font-size: 28px;
     font-weight: 800;
-    transform-origin: center;
+    color: white;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    flex-grow: 1;
+    text-align: center;
+    overflow: visible;
+    perspective: 1000px;
+    margin: 0;
+    padding: 0;
 }
 
-/* Анимация переливания градиента */
-@keyframes gradientFlow {
-    0% {
-        background-position: 0% 50%;
+#mainPage .title-text {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
+
+#mainPage .letter {
+    display: inline-block;
+    position: relative;
+    color: white;
+    animation: letterFloat 3s ease-in-out infinite;
+    transform-origin: 50% 50%;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 105, 180, 0.3),
+        0 0 30px rgba(138, 43, 226, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Разные задержки для каждой буквы для эффекта волны */
+#mainPage .letter:nth-child(1) { animation-delay: 0.0s; }
+#mainPage .letter:nth-child(2) { animation-delay: 0.1s; }
+#mainPage .letter:nth-child(3) { animation-delay: 0.2s; }
+#mainPage .letter:nth-child(4) { animation-delay: 0.3s; }
+#mainPage .letter:nth-child(5) { animation-delay: 0.4s; }
+#mainPage .letter:nth-child(6) { animation-delay: 0.5s; }
+#mainPage .letter:nth-child(7) { animation-delay: 0.6s; }
+#mainPage .letter:nth-child(8) { animation-delay: 0.7s; }
+#mainPage .letter:nth-child(9) { animation-delay: 0.8s; }
+#mainPage .letter:nth-child(10) { animation-delay: 0.9s; }
+#mainPage .letter:nth-child(11) { animation-delay: 1.0s; }
+#mainPage .letter:nth-child(12) { animation-delay: 1.1s; }
+
+/* Анимация плавающего движения букв */
+@keyframes letterFloat {
+    0%, 100% {
+        transform: translateY(0) rotateX(0) rotateY(0) scale(1);
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.5),
+            0 0 20px rgba(255, 105, 180, 0.3),
+            0 0 30px rgba(138, 43, 226, 0.2);
+    }
+    25% {
+        transform: translateY(-5px) rotateX(5deg) rotateY(2deg) scale(1.05);
+        text-shadow: 
+            0 0 15px rgba(255, 255, 255, 0.7),
+            0 0 25px rgba(255, 105, 180, 0.5),
+            0 0 35px rgba(138, 43, 226, 0.4),
+            0 0 45px rgba(255, 20, 147, 0.3);
     }
     50% {
-        background-position: 100% 50%;
+        transform: translateY(0) rotateX(0) rotateY(0) scale(1);
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.5),
+            0 0 20px rgba(255, 105, 180, 0.3),
+            0 0 30px rgba(138, 43, 226, 0.2);
+    }
+    75% {
+        transform: translateY(3px) rotateX(-3deg) rotateY(-1deg) scale(0.98);
+        text-shadow: 
+            0 0 12px rgba(255, 255, 255, 0.6),
+            0 0 22px rgba(255, 105, 180, 0.4),
+            0 0 32px rgba(138, 43, 226, 0.3);
+    }
+}
+
+/* Эффект свечения вокруг всего текста */
+#mainPage .title-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110%;
+    height: 150%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(138, 43, 226, 0.2) 0%,
+        rgba(255, 105, 180, 0.1) 30%,
+        transparent 70%
+    );
+    border-radius: 50%;
+    z-index: 1;
+    animation: glowPulse 4s ease-in-out infinite;
+    filter: blur(15px);
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* Эффект переливающегося сияния */
+#mainPage .title-shine {
+    position: absolute;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    z-index: 3;
+    animation: shineMove 6s linear infinite;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+@keyframes shineMove {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(0deg);
     }
     100% {
-        background-position: 0% 50%;
+        transform: translateX(100%) translateY(100%) rotate(360deg);
     }
 }
 
-/* Анимация пульсации */
-@keyframes pulseTitle {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
-
-/* Анимация свечения */
-@keyframes textGlow {
-    0%, 100% {
-        text-shadow: 0 0 20px rgba(138, 43, 226, 0.3),
-                     0 0 30px rgba(138, 43, 226, 0.2),
-                     0 0 40px rgba(138, 43, 226, 0.1);
-    }
-    50% {
-        text-shadow: 0 0 25px rgba(138, 43, 226, 0.5),
-                     0 0 35px rgba(138, 43, 226, 0.3),
-                     0 0 45px rgba(138, 43, 226, 0.2);
-    }
-}
-
-/* Дополнительная анимация для отдельных букв (опционально) */
-#mainPage .app-title::after {
-    content: "Peer-to-peer";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0.05) 50%, 
-        rgba(255, 255, 255, 0.1) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: shimmer 6s ease-in-out infinite;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-@keyframes shimmer {
-    0%, 100% {
-        background-position: -100% 0;
-    }
-    50% {
-        background-position: 200% 0;
-    }
-}
-
-/* Минимальные изменения для адаптивности */
-@media (max-width: 600px) {
-    #mainPage .app-title {
-        font-size: 24px;
-        animation: gradientFlow 8s ease infinite, 
-                   pulseTitle 3s ease-in-out infinite,
-                   textGlow 4s ease-in-out infinite;
-    }
-}
-
-/* Эффект при загрузке страницы - плавное появление анимации */
-@keyframes titleFadeIn {
+/* Эффект появления при загрузке */
+@keyframes titleEntrance {
     0% {
         opacity: 0;
-        transform: translateY(-10px) scale(0.95);
+        transform: translateY(-30px) scale(0.8);
+        filter: blur(10px);
     }
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
-#mainPage .app-title {
-    animation-delay: 0.5s;
+#mainPage .app-title .title-text {
+    animation: titleEntrance 1.5s ease-out forwards;
+}
+
+/* Эффект при наведении (для десктопов) */
+@media (hover: hover) {
+    #mainPage .letter:hover {
+        animation-play-state: paused;
+        transform: translateY(-10px) scale(1.2) rotateX(10deg) rotateY(10deg) !important;
+        color: #ff69b4;
+        text-shadow: 
+            0 0 20px #ff69b4,
+            0 0 40px #ff69b4,
+            0 0 60px #ff69b4,
+            0 0 80px #ff69b4 !important;
+        z-index: 10;
+    }
+}
+
+/* Эффект искр (опционально) */
+#mainPage .app-title::before,
+#mainPage .app-title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 4;
     opacity: 0;
-    animation: titleFadeIn 1s ease forwards,
-               gradientFlow 8s ease infinite 1.5s,
-               pulseTitle 3s ease-in-out infinite 1.5s,
-               textGlow 4s ease-in-out infinite 1.5s;
+}
+
+#mainPage .app-title::before {
+    background: radial-gradient(circle at 30% 50%, 
+        rgba(255, 105, 180, 0.6) 0%, 
+        transparent 50%);
+    animation: sparkleLeft 8s infinite;
+}
+
+#mainPage .app-title::after {
+    background: radial-gradient(circle at 70% 50%, 
+        rgba(138, 43, 226, 0.6) 0%, 
+        transparent 50%);
+    animation: sparkleRight 8s infinite;
+}
+
+@keyframes sparkleLeft {
+    0%, 100% { opacity: 0; }
+    25%, 75% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes sparkleRight {
+    0%, 100% { opacity: 0; }
+    35%, 85% { opacity: 0.3; }
+    60% { opacity: 0.6; }
+}
+
+/* Эффект перелива цвета текста */
+@keyframes colorShift {
+    0% {
+        color: #ffffff;
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        color: #ffe6f2;
+        filter: hue-rotate(90deg);
+    }
+    50% {
+        color: #ffffff;
+        filter: hue-rotate(180deg);
+    }
+    75% {
+        color: #f0e6ff;
+        filter: hue-rotate(270deg);
+    }
+    100% {
+        color: #ffffff;
+        filter: hue-rotate(360deg);
+    }
+}
+
+#mainPage .letter {
+    animation: 
+        letterFloat 3s ease-in-out infinite,
+        colorShift 15s linear infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    #mainPage .app-title {
+        font-size: 24px;
+    }
+    
+    #mainPage .letter {
+        animation: 
+            letterFloat 4s ease-in-out infinite,
+            colorShift 20s linear infinite;
+    }
+    
+    /* Уменьшаем амплитуду движения на мобильных */
+    @keyframes letterFloat {
+        0%, 100% {
+            transform: translateY(0) rotateX(0) scale(1);
+        }
+        50% {
+            transform: translateY(-3px) rotateX(3deg) scale(1.03);
+        }
+    }
+}
+
+/* Эффект глубины с помощью text-shadow слоев */
+#mainPage .letter {
+    text-shadow: 
+        0 1px 0 #ccc,
+        0 2px 0 #c9c9c9,
+        0 3px 0 #bbb,
+        0 4px 0 #b9b9b9,
+        0 5px 0 #aaa,
+        0 6px 1px rgba(0,0,0,.1),
+        0 0 5px rgba(0,0,0,.1),
+        0 1px 3px rgba(0,0,0,.3),
+        0 3px 5px rgba(0,0,0,.2),
+        0 10px 10px rgba(0,0,0,.25),
+        0 0 20px rgba(255, 105, 180, 0.5),
+        0 0 40px rgba(138, 43, 226, 0.3);
+}
+
+/* Финальный эффект - мерцание звезд */
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+    z-index: 1;
+}
+
+.star:nth-child(1) { top: 10%; left: 15%; width: 2px; height: 2px; animation-delay: 0s; }
+.star:nth-child(2) { top: 30%; left: 80%; width: 3px; height: 3px; animation-delay: 0.5s; }
+.star:nth-child(3) { top: 70%; left: 20%; width: 2px; height: 2px; animation-delay: 1s; }
+.star:nth-child(4) { top: 50%; left: 60%; width: 1px; height: 1px; animation-delay: 1.5s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
 }
