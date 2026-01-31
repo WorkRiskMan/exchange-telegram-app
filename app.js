@@ -81,36 +81,36 @@ const buyOrders = [
         exchange: "Bybit",
         status: "active"
     },
-    {
-        id: "BUY-003",
-        type: "buy",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "active"
-    },
-    {
-        id: "BUY-004",
-        type: "buy",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "active"
-    },
-    {
-        id: "BUY-005",
-        type: "buy",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "active"
-    }
+    //{
+    //    id: "BUY-003",
+    //    type: "buy",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //},
+    //{
+    //    id: "BUY-004",
+    //    type: "buy",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //},
+    //{
+    //    id: "BUY-005",
+    //    type: "buy",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //}
 ];
 
 // Массив заявок на ПРОДАЖУ USDT (пользователь продает USDT за RUB)
@@ -135,26 +135,26 @@ const sellOrders = [
         exchange: "Bybit",
         status: "active"
     },
-    {
-        id: "SELL-003",
-        type: "sell",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "active"
-    },
-    {
-        id: "SELL-004",
-        type: "sell",
-        volume: 0,
-        rate: 0,
-        rubAmount: 0,
-        counterparty: "Peer-to-peer",
-        exchange: "Bybit",
-        status: "active"
-    },
+    //{
+    //    id: "SELL-003",
+    //    type: "sell",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //},
+    //{
+    //    id: "SELL-004",
+    //    type: "sell",
+    //    volume: 0,
+    //    rate: 0,
+    //    rubAmount: 0,
+    //    counterparty: "Peer-to-peer",
+    //    exchange: "Bybit",
+    //    status: "active"
+    //},
     //{
     //    id: "SELL-005",
     //    type: "sell",
@@ -828,6 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
+
 
 
 
