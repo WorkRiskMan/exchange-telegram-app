@@ -64,10 +64,10 @@ const buyOrders = [
     {
         id: "BUY-001",
         type: "buy",
-        volume: 500,
-        rate: 92.5,
-        rubAmount: 46250,
-        counterparty: "Иван Петров",
+        volume: 1000,
+        rate: -,
+        rubAmount: 5000,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     },
@@ -75,39 +75,39 @@ const buyOrders = [
         id: "BUY-002",
         type: "buy",
         volume: 1000,
-        rate: 91.8,
-        rubAmount: 91800,
-        counterparty: "Анна Сидорова",
+        rate: -,
+        rubAmount: 10000,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     },
     {
         id: "BUY-003",
         type: "buy",
-        volume: 250,
-        rate: 93.2,
-        rubAmount: 23300,
-        counterparty: "Петр Иванов",
+        volume: -,
+        rate: -,
+        rubAmount: -,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     },
     {
         id: "BUY-004",
         type: "buy",
-        volume: 750,
-        rate: 90.5,
-        rubAmount: 67875,
-        counterparty: "Мария Козлова",
+        volume: -,
+        rate: -,
+        rubAmount: -,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     },
     {
         id: "BUY-005",
         type: "buy",
-        volume: 1200,
-        rate: 92.0,
-        rubAmount: 110400,
-        counterparty: "Сергей Смирнов",
+        volume: -,
+        rate: -,
+        rubAmount: -,
+        counterparty: "Peer-to-peer",
         exchange: "Bybit",
         status: "active"
     }
@@ -828,3 +828,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация приложения
 tg.ready();
+
