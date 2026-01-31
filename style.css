@@ -1989,3 +1989,122 @@ body {
     }
 }
 
+
+/* Анимация для заголовка Peer-to-peer на главной странице */
+#mainPage .app-title {
+    position: relative;
+    background: linear-gradient(135deg, 
+        #ff69b4 0%, 
+        #da70d6 25%, 
+        #8a2be2 50%, 
+        #4b0082 75%, 
+        #ff69b4 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 8s ease infinite, 
+               pulseTitle 3s ease-in-out infinite,
+               textGlow 4s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+    letter-spacing: 1px;
+    font-weight: 800;
+    transform-origin: center;
+}
+
+/* Анимация переливания градиента */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Анимация пульсации */
+@keyframes pulseTitle {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Анимация свечения */
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 20px rgba(138, 43, 226, 0.3),
+                     0 0 30px rgba(138, 43, 226, 0.2),
+                     0 0 40px rgba(138, 43, 226, 0.1);
+    }
+    50% {
+        text-shadow: 0 0 25px rgba(138, 43, 226, 0.5),
+                     0 0 35px rgba(138, 43, 226, 0.3),
+                     0 0 45px rgba(138, 43, 226, 0.2);
+    }
+}
+
+/* Дополнительная анимация для отдельных букв (опционально) */
+#mainPage .app-title::after {
+    content: "Peer-to-peer";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        background-position: -100% 0;
+    }
+    50% {
+        background-position: 200% 0;
+    }
+}
+
+/* Минимальные изменения для адаптивности */
+@media (max-width: 600px) {
+    #mainPage .app-title {
+        font-size: 24px;
+        animation: gradientFlow 8s ease infinite, 
+                   pulseTitle 3s ease-in-out infinite,
+                   textGlow 4s ease-in-out infinite;
+    }
+}
+
+/* Эффект при загрузке страницы - плавное появление анимации */
+@keyframes titleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#mainPage .app-title {
+    animation-delay: 0.5s;
+    opacity: 0;
+    animation: titleFadeIn 1s ease forwards,
+               gradientFlow 8s ease infinite 1.5s,
+               pulseTitle 3s ease-in-out infinite 1.5s,
+               textGlow 4s ease-in-out infinite 1.5s;
+}
